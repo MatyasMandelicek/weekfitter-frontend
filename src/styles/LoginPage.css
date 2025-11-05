@@ -1,0 +1,144 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: 
+    linear-gradient(135deg, rgba(255, 106, 0, 0.95), rgba(238, 9, 121, 0.95)),
+    url("../assets/Triathlon.png");
+  background-size: cover;
+  background-position: center 49%;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  padding: 40px;
+}
+
+.login-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-logo {
+  width: 90px;
+  margin-bottom: 20px;
+}
+
+.login-card h2 {
+  color: #ff6a00;
+  margin-bottom: 20px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.login-card input:focus {
+  border-color: #ff6a00;
+  box-shadow: 0 0 5px rgba(255, 106, 0, 0.3);
+}
+
+.login-card button {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff6a00;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-card button:hover {
+  background-color: #e65c00;
+}
+
+.login-card button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.register-link {
+  margin-top: 20px;
+  display: inline-block;
+  color: #ff6a00;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.register-link:hover {
+  color: #e65c00;
+}
+
+.success-message {
+  color: #ffffff;
+  background-color: #2e7d32;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.error-message {
+  position: relative;
+  z-index: 9999;
+  color: #ffffff !important;
+  background-color: #cc0000 !important;
+  border-radius: 8px !important;
+  padding: 12px 15px !important;
+  margin-bottom: 18px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  font-size: 1rem !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  animation: fadeIn 0.3s ease-in-out !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.forgot-password-link {
+  color: #ff6a00;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  text-align: right;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.forgot-password-link:hover {
+  color: #e65c00;
+  text-decoration: underline;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

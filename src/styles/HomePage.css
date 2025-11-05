@@ -1,0 +1,59 @@
+.home-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: 
+        linear-gradient(135deg, rgba(255, 106, 0, 0.95), rgba(238, 9, 121, 0.95)),
+        url("../assets/Triathlon.png");
+    background-size: cover;
+    background-position: center 49%;
+    background-repeat: no-repeat;
+    background-blend-mode: overlay;
+
+    color: white;
+    text-align: center;
+    padding: 40px;
+    overflow: hidden;
+}
+
+.home-logo {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 30px;
+    z-index: 2;
+}
+
+.home-container h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.home-container p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    max-width: 600px;
+    z-index: 2;
+}
+
+.home-btn {
+    background-color: #fff;
+    color: #ff6a00;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.home-btn:hover {
+    background-color: #ffe2d1;
+}
