@@ -180,7 +180,7 @@ const ProfilePage = () => {
           <div className="profile-content">
             <div className="profile-photo-section">
               <img
-                key={userData.photo} 
+                key={} 
                 src={resolvePhotoUrl(userData.photo, userData.gender)}
                 alt="Profilová fotka"
                 className="profile-photo"
