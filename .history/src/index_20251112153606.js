@@ -15,7 +15,7 @@ import "./index.css"; // Import globálních stylů
 import { AUTH_STORAGE_KEY } from "./lib/config";
 
 /**
- * Wake backend on startup (probuzení serveru)
+ * 🔄 Wake backend on startup (probuzení serveru)
  * Zavolá jednoduchý ping na backend, aby se server "probudil"
  * dříve, než se uživatel pokusí přihlásit.
  */
