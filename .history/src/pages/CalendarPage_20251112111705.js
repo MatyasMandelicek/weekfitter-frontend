@@ -229,7 +229,6 @@ const CalendarPage = () => {
       file: null,
       filePath: event.filePath || null,
     });
-    setNotifications(event.notifications && event.notifications.length > 0 ? event.notifications : [60]);
     setShowModal(true);
   };
 
