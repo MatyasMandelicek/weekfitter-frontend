@@ -76,17 +76,17 @@ const ProfilePage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "gender") {
-      setUserData((prev) => ({
-        ...prev,
-        gender: value,
-        photo:
-          isDefaultAvatar(prev.photo) || !prev.photo
-            ? getDefaultAvatar(value)
-            : prev.photo,
-      }));
-      return;
-    }
+  if (name === "gender") {
+    setUserData((prev) => ({
+      ...prev,
+      gender: value,
+      photo:
+        isDefaultAvatar(prev.photo) || !prev.photo
+          ? getDefaultAvatar(value)
+          : prev.photo,
+    }));
+    return;
+  }
 
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
