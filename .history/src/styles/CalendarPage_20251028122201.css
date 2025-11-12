@@ -1,4 +1,3 @@
-/* === Obecné === */
 .calendar-container {
   min-height: 100vh;
   display: flex;
@@ -13,6 +12,7 @@
   color: white;
 }
 
+/* --- Karta kalendáře --- */
 .calendar-card {
   background-color: rgba(255, 255, 255, 0.97);
   color: #333;
@@ -32,7 +32,7 @@
   font-weight: 700;
 }
 
-/* === Kalendář === */
+/* --- Kalendář --- */
 .rbc-calendar {
   background: white;
   border-radius: 15px;
@@ -79,14 +79,12 @@
   background-color: #f0f0f0;
 }
 
-/* === Toolbar === */
+/* --- Toolbar --- */
 .rbc-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-  flex-wrap: wrap;
-  gap: 6px;
 }
 
 .rbc-toolbar button {
@@ -184,7 +182,7 @@
   color: #333;
 }
 
-/* === Modal === */
+/* --- Modal --- */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -204,8 +202,7 @@
   color: #333;
   padding: 30px;
   border-radius: 15px;
-  width: 500px;
-  max-width: 95vw;
+  width: 500px; /* širší modal */
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
@@ -240,7 +237,7 @@
   outline: none;
 }
 
-/* === Textarea === */
+/* --- Textarea --- */
 .modal-content textarea,
 .sport-section textarea,
 .desc-textarea,
@@ -263,7 +260,7 @@
   outline: none;
 }
 
-/* === Tlačítka === */
+/* --- Tlačítka --- */
 .modal-buttons {
   display: flex;
   justify-content: space-between;
@@ -281,6 +278,7 @@
   transition: background-color 0.3s ease;
 }
 
+/* sjednocený oranžovo-růžový gradient */
 .modal-content button[type="submit"],
 .add-notify-btn,
 .close-notify-btn,
@@ -303,7 +301,7 @@
   box-shadow: 0 4px 15px rgba(255, 106, 0, 0.4);
 }
 
-/* Delete & Cancel */
+/* --- delete & cancel zůstávají původní --- */
 .modal-content .delete-btn {
   background-color: #dc3545;
   border-radius: 25px;
@@ -320,9 +318,10 @@
 
 .modal-content .cancel-btn:hover {
   background-color: #5a6268;
+  
 }
 
-/* === Sportovní sekce === */
+/* --- Sportovní sekce --- */
 .sport-section {
   margin-top: 15px;
   background-color: rgba(255, 106, 0, 0.08);
@@ -367,7 +366,7 @@
   background-color: #ffe8d5;
 }
 
-/* === Ostatní === */
+/* --- Ostatní --- */
 .allday-row {
   display: flex;
   align-items: center;
@@ -395,7 +394,7 @@
   gap: 10px;
 }
 
-/* === Ikony v kalendáři === */
+/* --- Ikony v kalendáři --- */
 .custom-event {
   display: flex;
   align-items: center;
@@ -410,7 +409,7 @@
   filter: brightness(0) invert(1);
 }
 
-/* === Notifikační sekce === */
+/* --- Notifikační sekce --- */
 .notification-section {
   margin-top: 20px;
   background: linear-gradient(135deg, rgba(255, 106, 0, 0.1), rgba(255, 200, 150, 0.1));
@@ -422,7 +421,6 @@
   text-align: left;
   box-shadow: 0 3px 12px rgba(255, 106, 0, 0.15);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  animation: fadeInNotify 0.4s ease-in-out;
 }
 
 .notification-section:hover {
@@ -473,7 +471,40 @@
   outline: none;
 }
 
-/* === Export tlačítko === */
+/* --- Animace --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInNotify {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.notification-section {
+  animation: fadeInNotify 0.4s ease-in-out;
+}
+
+/* --- Responsivita --- */
+@media (max-width: 600px) {
+  .notification-section {
+    padding: 12px 14px;
+  }
+  .notification-section h4 {
+    font-size: 1rem;
+  }
+  .notify-select {
+    font-size: 0.9rem;
+  }
+}
+
+/* --- Export tlačítko --- */
 .export-btn {
   display: inline-block;
   background: linear-gradient(135deg, #ff6a00, #ee0979);
@@ -492,66 +523,4 @@
   transform: scale(1.05);
   background: linear-gradient(135deg, #ee0979, #ff6a00);
   box-shadow: 0 4px 15px rgba(255, 106, 0, 0.4);
-}
-
-/* === Animace === */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes fadeInNotify {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* === Responsivita === */
-@media (max-width: 1100px) {
-  .calendar-with-summary {
-    grid-template-columns: 1fr;
-  }
-
-  .calendar-summary-column {
-    order: 2;
-    min-height: auto;
-    padding: 16px;
-  }
-
-  .calendar-left { order: 1; }
-
-  .summary-row {
-    height: auto;
-    padding: 8px 0;
-  }
-
-  .summary-icons {
-    flex-direction: row;
-    gap: 10px;
-    justify-content: space-around;
-  }
-}
-
-@media (max-width: 640px) {
-  .calendar-container { padding: 40px 12px; }
-  .calendar-card { padding: 14px; }
-  .calendar-card h2 { font-size: 1.4rem; }
-
-  .rbc-header { font-size: 0.85rem; }
-  .rbc-date-cell { font-size: 0.8rem; }
-  .rbc-event { font-size: 0.8rem; }
-
-  .modal-content { padding: 20px; }
-
-  .time-row { flex-direction: column; }
-  .notify-row { gap: 8px; }
-  .notify-row label { width: auto; }
-
-  .notification-section { padding: 12px 14px; }
-  .notification-section h4 { font-size: 1rem; }
-  .notify-select { font-size: 0.9rem; }
 }

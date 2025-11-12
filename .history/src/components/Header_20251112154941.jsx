@@ -1,65 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo03.png";
 import "../styles/Header.css";
 import { AUTH_STORAGE_KEY } from "../lib/config";
 
 const Header = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
+  // Zkontroluje, jestli je uživatel přihlášen (uloženo v localStorage)
   useEffect(() => {
-    setIsLoggedIn(localStorage.getItem(AUTH_STORAGE_KEY) === "true");
+    const loggedIn = localStorage.getItem(AUTH_STORAGE_KEY) === "true";
+    setIsLoggedIn(loggedIn);
   }, []);
 
-  // zavřít menu při změně stránky
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location.pathname]);
-
+  // Odhlášení
   const handleLogout = () => {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userName");
     setIsLoggedIn(false);
+    console.log("Uživatel odhlášen");
     navigate("/home");
   };
 
-  const handleLogin = () => navigate("/login");
+  // Přihlášení
+  const handleLogin = () => {
+    navigate("/login");
+  };
 
   return (
     <header className="header">
       <div className="header-content">
-        <button
-          className="logo-container"
-          onClick={() => navigate("/")}
-          aria-label="WeekFitter domů"
-        >
-          <img src={Logo} alt="WeekFitter" className="header-logo" />
+        {/* Logo vlevo - kliknutí vrací na domovskou stránku */}
+        <div className="logo-container" onClick={() => navigate("/")}>
+          <img src={Logo} alt="WeekFitter Logo" className="header-logo" />
           <h2 className="app-name">WeekFitter</h2>
-        </button>
-
-        {/* Hamburger pro mobily */}
-        <button
-          className="hamburger"
-          aria-label="Menu"
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        </div>
 
         {/* Navigace */}
-        <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
+        <nav className="nav-links">
           <Link to="/home">Domů</Link>
           <Link to="/calendar">Kalendář</Link>
           <Link to="/dashboard">Dashboard</Link>
           <Link to="/profile">Profil</Link>
 
+          {/* Dynamické tlačítko */}
           {isLoggedIn ? (
             <button onClick={handleLogout} className="primary-btn">
               Odhlásit se

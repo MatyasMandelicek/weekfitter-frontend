@@ -541,7 +541,7 @@ const CalendarPage = () => {
             date={date}
             onView={setView}
             onNavigate={setDate}
-            style={{ height: calendarHeight, fontSize: calendarFont, touchAction: "manipulation" }}
+            style={{ height: 750, fontSize: "0.95rem", touchAction: "manipulation" }}
             messages={{
               next: "Další",
               previous: "Předchozí",
@@ -674,7 +674,7 @@ const CalendarPage = () => {
               date={date}
               onView={setView}
               onNavigate={setDate}
-              style={{ height: calendarHeight, fontSize: calendarFont, touchAction: "manipulation" }}
+              style={{ height: 750, fontSize: "0.95rem", touchAction: "manipulation" }}
               messages={{
                 next: "Další",
                 previous: "Předchozí",

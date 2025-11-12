@@ -76,8 +76,8 @@ const CalendarPage = () => {
   const [view, setView] = useState(Views.MONTH);
   const [date, setDate] = useState(new Date());
   const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 640px)").matches;
-  const calendarHeight = isMobile ? 520 : 750;
-  const calendarFont = isMobile ? "0.85rem" : "0.95rem";
+const calendarHeight = isMobile ? 520 : 750;
+const calendarFont = isMobile ? "0.85rem" : "0.95rem";
 
 
 
@@ -541,7 +541,7 @@ const CalendarPage = () => {
             date={date}
             onView={setView}
             onNavigate={setDate}
-            style={{ height: calendarHeight, fontSize: calendarFont, touchAction: "manipulation" }}
+            style={{ height: 750, fontSize: "0.95rem", touchAction: "manipulation" }}
             messages={{
               next: "Další",
               previous: "Předchozí",
@@ -674,7 +674,7 @@ const CalendarPage = () => {
               date={date}
               onView={setView}
               onNavigate={setDate}
-              style={{ height: calendarHeight, fontSize: calendarFont, touchAction: "manipulation" }}
+              style={{ height: 750, fontSize: "0.95rem", touchAction: "manipulation" }}
               messages={{
                 next: "Další",
                 previous: "Předchozí",
