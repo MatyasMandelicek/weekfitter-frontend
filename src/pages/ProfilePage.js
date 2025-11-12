@@ -10,9 +10,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import "../styles/ProfilePage.css";
-import maleAvatar from "../avatars/male_avatar.png";
-import femaleAvatar from "../avatars/female_avatar.png";
-import neutralAvatar from "../avatars/neutral_avatar.png";
 import { API_URL } from "../lib/config";
 
 const ProfilePage = () => {
@@ -51,9 +48,9 @@ const ProfilePage = () => {
 
   // Výběr správného výchozího avataru podle pohlaví
   const getDefaultAvatar = (gender) => {
-    if (gender === "MALE") return maleAvatar;
-    if (gender === "FEMALE") return femaleAvatar;
-    return neutralAvatar;
+    if (gender === "MALE") return "/avatars/male_avatar.png";
+    if (gender === "FEMALE") return "/avatars/female_avatar.png";
+    return "/avatars/neutral_avatar.png";
   };
 
   // Změna údajů ve formuláři
