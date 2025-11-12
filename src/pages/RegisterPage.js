@@ -10,9 +10,6 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Logo from "../assets/Logo02.png";
-import MaleAvatar from "../avatars/male_avatar.png";
-import FemaleAvatar from "../avatars/female_avatar.png";
-import NeutralAvatar from "../avatars/neutral_avatar.png";
 import { useNavigate } from "react-router-dom";
 import "../styles/RegisterPage.css";
 import { API_URL } from "../lib/config";
@@ -39,10 +36,10 @@ const RegisterPage = () => {
   const handleGenderSelect = (gender) => {
     const avatar = 
       gender === "MALE"
-        ? MaleAvatar
+        ? "/avatars/male_avatar.png"
         : gender === "FEMALE"
-        ? FemaleAvatar
-        : NeutralAvatar;
+        ? "/avatars/female_avatar.png"
+        : "/avatars/neutral_avatar.png";
 
     setFormData((prev) => ({...prev, gender, profilePicture: avatar }));
   };
@@ -108,7 +105,7 @@ const RegisterPage = () => {
                   checked={formData.gender === "MALE"}
                   onChange={() => handleGenderSelect("MALE")}
                 />
-                <img src={MaleAvatar} alt="Muž" />
+                <img src={"/avatars/male_avatar.png"} alt="Muž" />
               </label>
 
               <label>
@@ -119,7 +116,7 @@ const RegisterPage = () => {
                   checked={formData.gender === "FEMALE"}
                   onChange={() => handleGenderSelect("FEMALE")}
                 />
-                <img src={FemaleAvatar} alt="Žena" />
+                <img src={"/avatars/female_avatar.png"} alt="Žena" />
               </label>
 
               <label>
@@ -130,7 +127,7 @@ const RegisterPage = () => {
                   checked={formData.gender === "OTHER"}
                   onChange={() => handleGenderSelect("OTHER")}
                 />
-                <img src={NeutralAvatar} alt="Ostatní" />
+                <img src={"/avatars/neutral_avatar.png"} alt="Ostatní" />
               </label>
             </div>
           </div>
