@@ -81,10 +81,10 @@ const ProfilePage = () => {
         ...prev,
         gender: value,
         photo: getDefaultAvatar(value),
+
       }));
       return;
     }
-    
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 

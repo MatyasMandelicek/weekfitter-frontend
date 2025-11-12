@@ -76,15 +76,18 @@ const ProfilePage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+      // pokud se mění pohlaví → nastavíme defaultní avatar pro nové pohlaví
     if (name === "gender") {
       setUserData((prev) => ({
         ...prev,
         gender: value,
+        // vždy vynutit default avatar dle požadavku:
         photo: getDefaultAvatar(value),
+        // (pokud bys NIKDY nechtěl přepsat vlastní nahranou fotku, dej místo řádku výše):
+        // photo: isDefaultAvatar(prev.photo) || !prev.photo ? getDefaultAvatar(value) : prev.photo,
       }));
       return;
     }
-    
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 

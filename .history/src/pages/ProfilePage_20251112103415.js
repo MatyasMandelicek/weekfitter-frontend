@@ -75,15 +75,6 @@ const ProfilePage = () => {
   // Změna údajů ve formuláři
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "gender") {
-      setUserData((prev) => ({
-        ...prev,
-        gender: value,
-        photo: getDefaultAvatar(value),
-      }));
-      return;
-    }
     
     setUserData((prev) => ({ ...prev, [name]: value }));
   };

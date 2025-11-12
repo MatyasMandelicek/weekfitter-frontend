@@ -81,10 +81,11 @@ const ProfilePage = () => {
         ...prev,
         gender: value,
         photo: getDefaultAvatar(value),
+        // (pokud bys NIKDY nechtěl přepsat vlastní nahranou fotku, dej místo řádku výše):
+        // photo: isDefaultAvatar(prev.photo) || !prev.photo ? getDefaultAvatar(value) : prev.photo,
       }));
       return;
     }
-    
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 

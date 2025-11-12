@@ -84,7 +84,6 @@ const ProfilePage = () => {
       }));
       return;
     }
-    
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 

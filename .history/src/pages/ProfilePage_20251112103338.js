@@ -56,6 +56,7 @@ const ProfilePage = () => {
   const isDefaultAvatar = (photo) =>
     typeof photo === "string" && photo.startsWith("/avatars/");
 
+
   // Vrátí správnou URL pro fotku (řeší frontendové i backendové cesty)
   const resolvePhotoUrl = (photo, gender) => {
     if (!photo || photo === "null" || photo === "undefined" || photo.trim() === "") {
@@ -75,16 +76,6 @@ const ProfilePage = () => {
   // Změna údajů ve formuláři
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "gender") {
-      setUserData((prev) => ({
-        ...prev,
-        gender: value,
-        photo: getDefaultAvatar(value),
-      }));
-      return;
-    }
-    
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
