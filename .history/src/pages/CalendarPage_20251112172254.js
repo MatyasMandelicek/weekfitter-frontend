@@ -89,10 +89,10 @@ const CalendarPage = () => {
       }
     };
 
-    handleResize(); // spustit hned při načtení
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  handleResize(); // spustit hned při načtení
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
 
 

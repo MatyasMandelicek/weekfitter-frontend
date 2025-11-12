@@ -79,21 +79,7 @@ const CalendarPage = () => {
   const calendarHeight = isMobile ? 520 : 750;
   const calendarFont = isMobile ? "0.85rem" : "0.95rem";
 
-  // === Automatické přizpůsobení pohledu kalendáře ===
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setView(Views.WEEK);
-      } else {
-        setView(Views.MONTH);
-      }
-    };
-
-    handleResize(); // spustit hned při načtení
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+  
 
 
   /* 
