@@ -53,6 +53,22 @@ const ProfilePage = () => {
     return "/avatars/neutral_avatar.png";
   };
 
+  // Vrátí správnou URL pro fotku (řeší frontendové i backendové cesty)
+  const resolvePhotoUrl = (photo, gender) => {
+    if (!photo || photo === "null" || photo === "undefined" || photo.trim() === "") {
+      return getDefaultAvatar(gender);
+    }
+
+    // Pokud už je to cesta z frontend /avatars nebo plná URL
+    if (photo.startsWith("/avatars/") || photo.startsWith("http")) {
+      return photo;
+    }
+
+    // Jinak je to backendová relativní cesta (např. /uploads/photo.png)
+    return `${API_URL}${photo}`;
+  };
+
+
   // Změna údajů ve formuláři
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -148,9 +164,13 @@ const ProfilePage = () => {
           <div className="profile-content">
             <div className="profile-photo-section">
               <img
-                src={userData.photo ? `${API_URL}${userData.photo}` : getDefaultAvatar(userData.gender)}
+                src={resolvePhotoUrl(userData.photo, userData.gender)}
                 alt="Profilová fotka"
                 className="profile-photo"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = getDefaultAvatar(userData.gender);
+                }}
               />
               <label htmlFor="profilePicture" className="upload-btn">
                 Nahrát novou fotku
