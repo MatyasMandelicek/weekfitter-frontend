@@ -88,6 +88,7 @@ const ProfilePage = () => {
       return;
     }
 
+
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -180,7 +181,7 @@ const ProfilePage = () => {
           <div className="profile-content">
             <div className="profile-photo-section">
               <img
-                key={avatarRefresh} 
+                key={userData.photo} 
                 src={resolvePhotoUrl(userData.photo, userData.gender)}
                 alt="Profilová fotka"
                 className="profile-photo"

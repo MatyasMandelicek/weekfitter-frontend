@@ -77,16 +77,17 @@ const ProfilePage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "gender") {
-      const newAvatar = getDefaultAvatar(value);
-      setUserData((prev) => ({
-        ...prev,
-        gender: value,
-        photo: newAvatar,
-      }));
-      setAvatarRefresh((prev) => prev + 1);
-      return;
-    }
+if (name === "gender") {
+  const newAvatar = getDefaultAvatar(value);
+  setUserData((prev) => ({
+    ...prev,
+    gender: value,
+    photo: newAvatar,
+  }));
+  setAvatarRefresh((prev) => prev + 1); // 👈 přinutí přerenderování
+  return;
+}
+
 
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
@@ -180,7 +181,7 @@ const ProfilePage = () => {
           <div className="profile-content">
             <div className="profile-photo-section">
               <img
-                key={avatarRefresh} 
+                key={userData.photo} 
                 src={resolvePhotoUrl(userData.photo, userData.gender)}
                 alt="Profilová fotka"
                 className="profile-photo"

@@ -19,6 +19,7 @@ const ProfilePage = () => {
   const [message, setMessage] = useState({ type: "", text: "" });
   const [avatarRefresh, setAvatarRefresh] = useState(0);
 
+
   const email = localStorage.getItem("userEmail");
 
   // Načtení dat uživatele z backendu
@@ -78,13 +79,14 @@ const ProfilePage = () => {
     const { name, value } = e.target;
 
     if (name === "gender") {
-      const newAvatar = getDefaultAvatar(value);
       setUserData((prev) => ({
         ...prev,
         gender: value,
-        photo: newAvatar,
+        photo:
+          isDefaultAvatar(prev.photo) || !prev.photo
+            ? getDefaultAvatar(value)
+            : prev.photo,
       }));
-      setAvatarRefresh((prev) => prev + 1);
       return;
     }
 
@@ -180,7 +182,7 @@ const ProfilePage = () => {
           <div className="profile-content">
             <div className="profile-photo-section">
               <img
-                key={avatarRefresh} 
+                key={userData.photo} 
                 src={resolvePhotoUrl(userData.photo, userData.gender)}
                 alt="Profilová fotka"
                 className="profile-photo"
