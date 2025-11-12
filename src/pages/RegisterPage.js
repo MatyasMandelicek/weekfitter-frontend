@@ -10,9 +10,9 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Logo from "../assets/Logo02.png";
-import MaleAvatar from "../assets/male_avatar.png";
-import FemaleAvatar from "../assets/female_avatar.png";
-import NeutralAvatar from "../assets/neutral_avatar.png";
+import MaleAvatar from "../avatars/male_avatar.png";
+import FemaleAvatar from "../avatars/female_avatar.png";
+import NeutralAvatar from "../avatars/neutral_avatar.png";
 import { useNavigate } from "react-router-dom";
 import "../styles/RegisterPage.css";
 import { API_URL } from "../lib/config";
