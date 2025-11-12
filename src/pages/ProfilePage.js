@@ -10,9 +10,9 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import "../styles/ProfilePage.css";
-import maleAvatar from "../assets/male_avatar.png";
-import femaleAvatar from "../assets/female_avatar.png";
-import neutralAvatar from "../assets/neutral_avatar.png";
+import maleAvatar from "../avatars/male_avatar.png";
+import femaleAvatar from "../avatars/female_avatar.png";
+import neutralAvatar from "../avatars/neutral_avatar.png";
 import { API_URL } from "../lib/config";
 
 const ProfilePage = () => {
