@@ -283,9 +283,6 @@ const CalendarPage = () => {
       filePath: overrides.filePath ?? base.filePath ?? null,
     };
   };
-
-
-  
   // === Odeslání a mazání ===
   const handleSubmit = async (e) => {
     e.preventDefault();
