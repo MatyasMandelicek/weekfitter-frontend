@@ -813,6 +813,7 @@ const CalendarPage = () => {
 
                   timeGutterHeader: () => null
                 }}
+
                 view={view}
                 date={date}
                 onView={setView}
