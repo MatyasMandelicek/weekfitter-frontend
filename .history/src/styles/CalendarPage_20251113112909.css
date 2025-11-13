@@ -166,9 +166,14 @@
   flex-direction: column;
   gap: 4px;
 }
+
 .summary-total {
   text-align: center;
   font-weight: 600;
+  color: #333;
+  font-size: 0.85rem;
+  margin-top: 5px;  
+  margin-bottom: 5px;
 }
 
 .sport-item {

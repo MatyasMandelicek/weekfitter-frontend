@@ -169,7 +169,13 @@
 .summary-total {
   text-align: center;
   font-weight: 600;
+  color: #333;
+  font-size: 0.85rem;      /* menší velikost textu */
+  margin-top: 10px;        /* větší mezera nahoře */
+  margin-bottom: 8px;      /* mezera dole */
+  opacity: 0.85;           /* jemnější vzhled */
 }
+
 
 .sport-item {
   display: flex;
