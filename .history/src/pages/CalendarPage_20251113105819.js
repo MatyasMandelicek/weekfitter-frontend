@@ -713,6 +713,7 @@ const CalendarPage = () => {
                       totals.OTHER
                     )}</strong>
                   </div>
+
                 </div>
               </div>
             );

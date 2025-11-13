@@ -706,13 +706,14 @@ const CalendarPage = () => {
                     <span>{toHours(totals.OTHER)}</span>
                   </div>
                   <div className="summary-total">
-                    Celkem: <strong>{toHours(
-                      totals.RUNNING +
-                      totals.CYCLING +
-                      totals.SWIMMING +
-                      totals.OTHER
-                    )}</strong>
-                  </div>
+  Celkem: <strong>{toHours(
+    totals.RUNNING +
+    totals.CYCLING +
+    totals.SWIMMING +
+    totals.OTHER
+  )}</strong>
+</div>
+
                 </div>
               </div>
             );
