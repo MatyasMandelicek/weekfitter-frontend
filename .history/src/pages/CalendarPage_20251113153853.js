@@ -793,27 +793,28 @@ const CalendarPage = () => {
                 longPressThreshold={50}
                 popup
                 eventPropGetter={getEventStyle}
-                components={{
-                  event: CustomEvent,
+components={{
+  event: CustomEvent,
 
-                  timeHeaderCell: ({ label }) => {
-                    const dateObj = new Date(label);
-                    if (isNaN(dateObj)) return label;
+  timeHeaderCell: ({ label }) => {
+    const dateObj = new Date(label);
+    if (isNaN(dateObj)) return label;
 
-                    const day = dateObj
-                      .toLocaleDateString("cs-CZ", { weekday: "short" })
-                      .replace(".", ""); // „Po.“ → „Po“
+    const day = dateObj
+      .toLocaleDateString("cs-CZ", { weekday: "short" })
+      .replace(".", ""); // „Po.“ → „Po“
 
-                    const dayNum = dateObj.getDate();
+    const dayNum = dateObj.getDate();
 
-                    return (
-                      <div className="custom-day-header">
-                        <span className="day-name">{day}</span>
-                        <span className="day-number">{dayNum}</span>
-                      </div>
-                    );
-                  }
-                }}
+    return (
+      <div className="custom-day-header">
+        <span className="day-name">{day}</span>
+        <span className="day-number">{dayNum}</span>
+      </div>
+    );
+  }
+}}
+
                 view={view}
                 date={date}
                 onView={setView}
