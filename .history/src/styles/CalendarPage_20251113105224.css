@@ -117,7 +117,7 @@
 .calendar-with-summary {
   display: grid;
   grid-template-columns: 2.2fr 0.8fr;
-  gap: 20px;
+  gap: 16px;
   align-items: stretch;
   width: 100%;
 }
