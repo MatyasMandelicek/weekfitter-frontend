@@ -1,0 +1,409 @@
+/* === ZÁKLADNÍ LAYOUT === */
+.calendar-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(135deg, rgba(255, 106, 0, 0.95), rgba(238, 9, 121, 0.95)),
+    url("../assets/Triathlon.png");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  padding: 60px 20px;
+  color: white;
+}
+
+.calendar-card {
+  background-color: rgba(255, 255, 255, 0.97);
+  color: #333;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+  max-width: 1400px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.calendar-card h2 {
+  color: #ff6a00;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* === KALENDÁŘ === */
+.rbc-calendar {
+  background: white;
+  border-radius: 15px;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.rbc-header {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 8px 0;
+}
+
+.rbc-date-cell {
+  padding: 6px;
+  font-size: 0.95rem;
+}
+
+.rbc-event {
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.rbc-event:hover {
+  transform: scale(1.05);
+}
+
+.rbc-today {
+  background-color: rgba(255, 106, 0, 0.1);
+}
+
+/* === TOOLBAR === */
+.rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rbc-toolbar button {
+  background: none;
+  border: 2px solid #ff6a00;
+  color: #ff6a00;
+  border-radius: 8px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.rbc-toolbar button:hover,
+.rbc-toolbar .rbc-active {
+  background-color: #ff6a00;
+  color: white;
+}
+
+/* === MODAL === */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+  background: white;
+  color: #333;
+  padding: 30px;
+  border-radius: 15px;
+  width: 500px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-in-out;
+}
+
+.modal-content h3 {
+  color: #ff6a00;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+  border-color: #ff6a00;
+  outline: none;
+}
+
+/* === TEXTAREA === */
+textarea {
+  resize: none;
+  overflow: hidden;
+  min-height: 60px;
+}
+
+/* === TLAČÍTKA === */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.modal-content button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 25px;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.modal-content button[type="submit"],
+.add-notify-btn,
+.close-notify-btn {
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  box-shadow: 0 2px 10px rgba(238, 9, 121, 0.2);
+}
+
+.modal-content button[type="submit"]:hover,
+.add-notify-btn:hover,
+.close-notify-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #ee0979, #ff6a00);
+}
+
+.delete-btn {
+  background-color: #dc3545;
+}
+.delete-btn:hover {
+  background-color: #c82333;
+}
+.cancel-btn {
+  background-color: #6c757d;
+}
+.cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+/* === SPORTOVNÍ SEKCE === */
+.sport-section {
+  margin-top: 10px;
+  background-color: rgba(255, 106, 0, 0.08);
+  border: 2px solid #ff6a00;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: left;
+}
+.sport-section h4 {
+  color: #ff6a00;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+.sport-section label {
+  font-weight: 600;
+  display: block;
+  margin-top: 6px;
+}
+
+/* === NOTIFIKACE === */
+.notification-section {
+  background: linear-gradient(135deg, rgba(255, 106, 0, 0.08), rgba(255, 200, 150, 0.1));
+  border: 2px solid rgba(255, 106, 0, 0.4);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(255, 106, 0, 0.15);
+}
+.notification-section h4 {
+  text-align: center;
+  color: #ff6a00;
+  margin-bottom: 10px;
+}
+.notify-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.notify-select {
+  flex-grow: 1;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+/* === EXPORT === */
+.export-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  padding: 10px 18px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 10px rgba(238, 9, 121, 0.25);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+.export-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #ee0979, #ff6a00);
+}
+
+/* === MOBILNÍ TOOLBAR === */
+.mobile-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.toolbar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+.toolbar-nav button {
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+  flex: 1;
+}
+.toolbar-nav span {
+  flex: 2;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+.view-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 2px solid #ff6a00;
+  font-weight: 600;
+  color: #ff6a00;
+  background-color: white;
+}
+
+/* === SPODNÍ BAR === */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  border-top: 2px solid #ff6a00;
+  padding: 8px 0;
+  z-index: 999;
+}
+.bottom-bar button {
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  border: none;
+  color: white;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+
+/* === ANIMACE === */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* === RESPONSIVITA === */
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 30px 10px 80px;
+  }
+  .calendar-card {
+    padding: 18px 14px;
+    border-radius: 16px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+  }
+  .calendar-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 14px;
+  }
+  .rbc-toolbar {
+    display: none; /* skrývá desktop toolbar */
+  }
+  .rbc-calendar {
+    border-radius: 12px;
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+  .rbc-event {
+    font-size: 0.75rem;
+    padding: 1px 3px;
+    white-space: nowrap;
+  }
+  .modal-content {
+    width: 95vw;
+    max-height: 85vh;
+    padding: 18px;
+    border-radius: 14px;
+  }
+  .time-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .notify-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .add-notify-btn {
+    width: 100%;
+  }
+}
+
+/* === MALÉ MOBILY === */
+@media (max-width: 420px) {
+  .calendar-card h2 {
+    font-size: 1.3rem;
+  }
+  .toolbar-nav button {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+  .view-select {
+    font-size: 0.85rem;
+  }
+  .bottom-bar button {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+}

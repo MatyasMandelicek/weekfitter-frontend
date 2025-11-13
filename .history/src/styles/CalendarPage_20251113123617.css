@@ -168,14 +168,13 @@
 }
 
 .summary-total {
+  margin-top: 6px;
   text-align: center;
-  font-weight: 500;
-  font-size: 0.75rem;
-  color: #555;
-  margin-top: 4px;
-  margin-bottom: 2px;
-  line-height: 1;
+  font-weight: 700;
+  color: #333;
+  font-size: 0.95rem;
 }
+
 
 .sport-item {
   display: flex;

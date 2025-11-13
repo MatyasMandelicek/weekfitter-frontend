@@ -170,12 +170,14 @@
 .summary-total {
   text-align: center;
   font-weight: 500;
-  font-size: 0.75rem;
+  font-size: 0.75rem;   /* menší text */
   color: #555;
-  margin-top: 4px;
-  margin-bottom: 2px;
-  line-height: 1;
+  margin-top: 4px;      /* malá mezera nad */
+  margin-bottom: 2px;   /* malá mezera pod - NEMĚNÍ výšku řádku */
+  line-height: 1;       /* zabrání roztahování containeru */
 }
+
+
 
 .sport-item {
   display: flex;

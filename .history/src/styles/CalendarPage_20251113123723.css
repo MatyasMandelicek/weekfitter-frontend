@@ -113,7 +113,7 @@
   border-color: #ff6a00;
 }
 
-/* === Layout měsíčního pohledu (desktop) === */
+/* === Layout měsíčního pohledu  === */
 .calendar-with-summary {
   display: grid;
   grid-template-columns: 2.2fr 0.8fr;
@@ -143,10 +143,10 @@
 .summary-row {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 130px;
+  justify-content: flex-start;
   border-bottom: 1px solid #ddd;
-  padding: 6px;
+  padding: 10px 6px 14px 6px;
+  height: auto;
 }
 
 .summary-row:last-child {
@@ -154,33 +154,33 @@
 }
 
 .summary-week-label {
-  font-weight: 600;
+  font-weight: 700;
   color: #333;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .summary-icons {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  margin-bottom: 6px;
 }
 
 .summary-total {
   text-align: center;
-  font-weight: 500;
-  font-size: 0.75rem;
-  color: #555;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #666;
   margin-top: 4px;
-  margin-bottom: 2px;
-  line-height: 1;
+  margin-bottom: 6px;
 }
 
 .sport-item {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   font-size: 0.9rem;
 }
 
