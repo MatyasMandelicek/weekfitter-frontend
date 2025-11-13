@@ -709,76 +709,7 @@
   }
 }
 
-/* === FIX 1: Výška kalendáře – neusekávat === */
-@media (max-width: 768px) {
-  .rbc-time-view,
-  .rbc-month-view {
-    min-height: 680px !important;
-  }
 
-  .rbc-time-content {
-    min-height: 600px !important;
-  }
-}
-
-
-/* === FIX 2: Čitelné datum v týdenním pohledu === */
-@media (max-width: 768px) {
-  .rbc-time-header-content {
-    font-size: 0.85rem;
-    white-space: nowrap;
-  }
-
-  .rbc-time-header-gutter {
-    font-size: 0.85rem !important;
-  }
-
-  .rbc-time-header-cell {
-    padding: 4px 6px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-  }
-
-  .rbc-time-view {
-    overflow-x: auto;
-  }
-}
-
-
-/* === FIX 3: Souhrny – zarovnání a čitelnost === */
-@media (max-width: 768px) {
-  .calendar-summary-column {
-    padding: 12px;
-  }
-
-  .summary-row {
-    height: auto;
-    padding: 10px 0;
-  }
-
-  .summary-week-label {
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-  }
-
-  .summary-icons {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .sport-item {
-    width: 48%;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .summary-total {
-    margin-top: 6px;
-    margin-bottom: 0px;
-    font-size: 0.8rem;
-  }
-}
 
 /* Ultra malé displeje (např. iPhone SE) */
 @media (max-width: 380px) {
