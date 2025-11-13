@@ -821,6 +821,7 @@
   }
 }
 
+/* === Week view: desktop layout, but day under number === */
 @media (max-width: 768px) {
 
   /* jen změníme obsah, ne výšku */
