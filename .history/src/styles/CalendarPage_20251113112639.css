@@ -173,8 +173,8 @@
   color: #333;
   font-size: 0.85rem;
   margin-top: 10px;  
-  margin-bottom: 8px;
-  opacity: 0.85;
+  margin-bottom: 8px;      /* mezera dole */
+  opacity: 0.85;           /* jemnější vzhled */
 }
 
 
