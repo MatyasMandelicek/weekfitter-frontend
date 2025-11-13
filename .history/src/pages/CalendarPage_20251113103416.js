@@ -216,31 +216,13 @@ const CalendarPage = () => {
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
-  // Kliknutí na volné místo v kalendáři - otevře nový formulář
+
+  // === Slot kliknutí ===
   const handleSelectSlot = (slotInfo) => {
     let start = slotInfo.start;
-    let end;
-
-    if (view === Views.MONTH) {
-      start = new Date(
-        start.getFullYear(),
-        start.getMonth(),
-        start.getDate(),
-        8,
-        0,
-        0
-      );
-      end = new Date(
-        start.getFullYear(),
-        start.getMonth(),
-        start.getDate(),
-        8,
-        30,
-        0
-      );
-    } else {
-      end = addMinutes(start, 30);
-    }
+    let end = addMinutes(start, 30);
+    if (view === Views.MONTH)
+      start = new Date(start.getFullYear(), start.getMonth(), start.getDate(), 8, 0, 0);
 
     setSelectedEvent(null);
     setFormData({
@@ -260,7 +242,7 @@ const CalendarPage = () => {
     setShowModal(true);
   };
 
-  // Kliknutí na existující událost -> načte ji do formuláře
+  // === Kliknutí na událost ===
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
     setFormData({
@@ -277,15 +259,10 @@ const CalendarPage = () => {
       file: null,
       filePath: event.filePath || null,
     });
-    setNotifications(
-      event.notifications && event.notifications.length > 0
-        ? event.notifications
-        : [60]
-    );
+    setNotifications(event.notifications?.length > 0 ? event.notifications : [60]);
     setShowModal(true);
   };
 
-  // Změna kategorie události
   const handleCategoryChange = (e) => {
     const category = e.target.value;
     setFormData((prev) => ({
@@ -295,7 +272,6 @@ const CalendarPage = () => {
     }));
   };
 
-  // Přepočet délky podle začátku a konce
   const handleDurationChange = (e) => {
     const minutes = parseInt(e.target.value, 10);
     if (!isNaN(minutes) && formData.start) {
@@ -306,15 +282,11 @@ const CalendarPage = () => {
         duration: e.target.value,
         end: format(newEnd, "yyyy-MM-dd'T'HH:mm"),
       }));
-    } else {
-      setFormData((prev) => ({ ...prev, duration: e.target.value }));
-    }
+    } else setFormData((prev) => ({ ...prev, duration: e.target.value }));
   };
 
-  // Změna začátku události - automaticky upraví konec
   const handleStartChange = (e) => {
     const newStart = new Date(e.target.value);
-
     if (formData.duration && !isNaN(parseInt(formData.duration, 10))) {
       const minutes = parseInt(formData.duration, 10);
       const newEnd = addMinutes(newStart, minutes);
@@ -324,16 +296,7 @@ const CalendarPage = () => {
         end: format(newEnd, "yyyy-MM-dd'T'HH:mm"),
       }));
     } else {
-      const prevEnd = new Date(formData.end);
-      const prevStart = new Date(formData.start);
-      const userManuallyChangedEnd =
-        Math.abs(prevEnd - prevStart - 30 * 60 * 1000) >
-        60 * 1000;
-
-      const newEnd = userManuallyChangedEnd
-        ? prevEnd
-        : new Date(newStart.getTime() + 60 * 60 * 1000);
-
+      const newEnd = new Date(newStart.getTime() + 60 * 60 * 1000);
       setFormData((prev) => ({
         ...prev,
         start: format(newStart, "yyyy-MM-dd'T'HH:mm"),
@@ -342,98 +305,57 @@ const CalendarPage = () => {
     }
   };
 
-  /* 
-    Pomocná funkce – tvorba payloadu pro backend
-    používá se u drag&drop, resize, uložit/aktualizovat
-   */
+  // === Pomocná funkce ===
   const buildPayloadFromEvent = (base, overrides = {}) => {
     const resolvedCategory = overrides.category ?? base.category ?? "OTHER";
     const isSport = resolvedCategory === "SPORT";
-
-    const startVal = overrides.start
-      ? new Date(overrides.start)
-      : new Date(base.start);
-    const endVal = overrides.end
-      ? new Date(overrides.end)
-      : new Date(base.end);
-
-    const startTime = format(startVal, "yyyy-MM-dd'T'HH:mm");
-    const endTime = format(endVal, "yyyy-MM-dd'T'HH:mm");
-
+    const startVal = overrides.start ? new Date(overrides.start) : new Date(base.start);
+    const endVal = overrides.end ? new Date(overrides.end) : new Date(base.end);
     return {
       id: base.id,
       title: overrides.title ?? base.title,
       description: isSport
-        ? overrides.sportDescription ??
-          base.sportDescription ??
-          ""
+        ? overrides.sportDescription ?? base.sportDescription ?? ""
         : overrides.description ?? base.description ?? "",
-      startTime,
-      endTime,
-      category: resolvedCategory, 
-      allDay: isSport
-        ? false
-        : Boolean(overrides.allDay ?? base.allDay),
-      duration: isSport
-        ? Number(overrides.duration ?? base.duration) ||
-          null
-        : null,
-      distance: isSport
-        ? Number(overrides.distance ?? base.distance) ||
-          null
-        : null,
+      startTime: format(startVal, "yyyy-MM-dd'T'HH:mm"),
+      endTime: format(endVal, "yyyy-MM-dd'T'HH:mm"),
+      category: resolvedCategory,
+      allDay: isSport ? false : Boolean(overrides.allDay ?? base.allDay),
+      duration: isSport ? Number(overrides.duration ?? base.duration) || null : null,
+      distance: isSport ? Number(overrides.distance ?? base.distance) || null : null,
       sportDescription: isSport
-        ? overrides.sportDescription ??
-          base.sportDescription ??
-          ""
+        ? overrides.sportDescription ?? base.sportDescription ?? ""
         : null,
-      sportType: isSport
-        ? overrides.sportType ?? base.sportType ?? "OTHER"
-        : null,
+      sportType: isSport ? overrides.sportType ?? base.sportType ?? "OTHER" : null,
       filePath: overrides.filePath ?? base.filePath ?? null,
     };
   };
 
-  /* 
-    Uložení (vytvoření / aktualizace) události
-    Upload přiloženého souboru (např. GPX)
-    Odeslání kompletního payloadu na backend
-    Po uložení znovu načte data
- */
+
+
+  // === Odeslání a mazání ===
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = localStorage.getItem("userEmail");
-    if (!email) {
-      alert("Uživatel není přihlášen.");
-      return;
-    }
+    if (!email) return alert("Uživatel není přihlášen.");
 
-    // Upload souboru (pokud existuje)
+    // Upload souboru
     let uploadedFilePath = formData.filePath;
     if (formData.file) {
       const uploadData = new FormData();
       uploadData.append("file", formData.file);
-
       try {
-        const uploadRes = await fetch(`${API_URL}/api/files/upload`, {
+        const res = await fetch(`${API_URL}/api/files/upload`, {
           method: "POST",
           body: uploadData,
         });
-
-        if (!uploadRes.ok) {
-          const msg = await uploadRes.text();
-          alert("Chyba při nahrávání souboru: " + msg);
-          return;
-        }
-
-        uploadedFilePath = await uploadRes.text();
-      } catch (error) {
-        alert("Chyba spojení s backendem při nahrávání souboru.");
-        return;
+        if (!res.ok) return alert("Chyba při nahrávání souboru.");
+        uploadedFilePath = await res.text();
+      } catch {
+        return alert("Chyba spojení s backendem při nahrávání souboru.");
       }
     }
 
-    // Příprava payloadu
     const payload = {
       title: formData.title,
       description:
@@ -443,8 +365,7 @@ const CalendarPage = () => {
       startTime: formData.start,
       endTime: formData.end,
       category: formData.category,
-      allDay:
-        formData.category !== "SPORT" ? formData.allDay : false,
+      allDay: formData.category !== "SPORT" ? formData.allDay : false,
       duration:
         formData.category === "SPORT"
           ? formData.duration
@@ -458,48 +379,33 @@ const CalendarPage = () => {
             : null
           : null,
       sportDescription:
-        formData.category === "SPORT"
-          ? formData.sportDescription
-          : null,
+        formData.category === "SPORT" ? formData.sportDescription : null,
       sportType:
-        formData.category === "SPORT"
-          ? formData.sportType
-          : null,
+        formData.category === "SPORT" ? formData.sportType : null,
       filePath: uploadedFilePath || null,
       notifications,
     };
 
     const method = selectedEvent ? "PUT" : "POST";
     const url = selectedEvent
-      ? `${API_URL}/api/events/${
-          selectedEvent.id
-        }?email=${encodeURIComponent(email)}`
+      ? `${API_URL}/api/events/${selectedEvent.id}?email=${encodeURIComponent(email)}`
       : `${API_URL}/api/events?email=${encodeURIComponent(email)}`;
 
     try {
       const res = await fetch(url, {
         method,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
-      if (!res.ok) {
-        const msg = await res.text();
-        alert("Chyba při ukládání události: " + msg);
-        return;
-      }
-
+      if (!res.ok) return alert("Chyba při ukládání události.");
       setShowModal(false);
       setSelectedEvent(null);
       await loadEvents();
-    } catch (error) {
+    } catch {
       alert("Chyba spojení s backendem při ukládání události.");
     }
   };
 
-  // Smazání události
   const handleDelete = async () => {
     if (!selectedEvent) return;
     try {
@@ -509,118 +415,91 @@ const CalendarPage = () => {
       setShowModal(false);
       setSelectedEvent(null);
       await loadEvents();
-    } catch (error) {
+    } catch {
       alert("Chyba při mazání události.");
     }
   };
 
-  /* 
-    Drag & Drop přesun události
-    Optimisticky aktualizuje UI
-    Pošle změnu na backend
- */
+  // === Drag & Drop ===
   const handleEventDrop = async ({ event, start, end }) => {
     const email = localStorage.getItem("userEmail");
-    const payload = buildPayloadFromEvent(
-      { ...event, start: event.start, end: event.end },
-      { start, end }
-    );
-
-    // Optimistická UI update
+    const payload = buildPayloadFromEvent(event, { start, end });
     setEvents((prev) =>
       prev.map((e) =>
-        e.id === event.id
-          ? { ...e, start: new Date(start), end: new Date(end) }
-          : e
+        e.id === event.id ? { ...e, start: new Date(start), end: new Date(end) } : e
       )
     );
-
     try {
-      const res = await fetch(
-        `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(
-          email
-        )}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
-      if (!res.ok) {
-        console.error("Chyba při přesunu události:", await res.text());
-        await loadEvents();
-      } else {
-        await loadEvents();
-      }
-    } catch (error) {
-      console.error("Chyba při přesunu události:", error);
+      await fetch(`${API_URL}/api/events/${event.id}?email=${encodeURIComponent(email)}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      await loadEvents();
+    } catch {
       await loadEvents();
     }
   };
+  const handleEventResize = handleEventDrop;
 
-  // Resize události
-  const handleEventResize = async ({ event, start, end }) => {
-    const email = localStorage.getItem("userEmail");
-    const payload = buildPayloadFromEvent(
-      { ...event, start: event.start, end: event.end },
-      { start, end }
-    );
-
-    setEvents((prev) =>
-      prev.map((e) =>
-        e.id === event.id
-          ? { ...e, start: new Date(start), end: new Date(end) }
-          : e
-      )
-    );
+  // === Export ===
+  const handleExportPNG = async () => {
+    if (view !== Views.MONTH) return alert("Export dostupný pouze v měsíčním pohledu.");
+    const exportElement = document.querySelector(".rbc-calendar");
+    if (!exportElement) return alert("Nelze najít kalendář k exportu.");
 
     try {
-      const res = await fetch(
-        `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(
-          email
-        )}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
-      if (!res.ok) {
-        console.error(
-          "Chyba při změně délky události:",
-          await res.text()
-        );
-        await loadEvents();
-      } else {
-        await loadEvents();
-      }
-    } catch (error) {
-      console.error("Chyba při změně délky události:", error);
-      await loadEvents();
+      const canvas = await html2canvas(exportElement, {
+        backgroundColor: "#fff",
+        scale: 2,
+        useCORS: true,
+      });
+      const link = document.createElement("a");
+      link.download = `WeekFitter-${format(date, "MM-yyyy")}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } catch {
+      alert("Chyba při exportu obrázku.");
     }
   };
 
-  /* === Měsíční přehled sportů === */
-  const renderWeeklySummaryAllWeeks = () => {
-    if (view !== Views.MONTH) return null;
+  // === Hlavní render ===
+  return (
+    <>
+      <Header />
+      <main className="calendar-container">
+        <div className="calendar-card">
+          <h2>Kalendář aktivit</h2>
 
-    const monthStart = startOfMonth(date);
-    const monthEnd = endOfMonth(date);
-    const weeks = eachWeekOfInterval(
-      { start: monthStart, end: monthEnd },
-      { weekStartsOn: 1 }
-    );
+          {/* Mobilní toolbar */}
+          {isMobile && (
+            <div className="mobile-toolbar">
+              <div className="toolbar-nav">
+                <button onClick={() => setDate(addDays(date, -7))}>‹</button>
+                <button onClick={() => setDate(new Date())}>Dnes</button>
+                <button onClick={() => setDate(addDays(date, 7))}>›</button>
+              </div>
+              <select
+                className="view-select"
+                value={view}
+                onChange={(e) => setView(e.target.value)}
+              >
+                <option value="month">Měsíc</option>
+                <option value="week">Týden</option>
+                <option value="day">Den</option>
+                <option value="agenda">Agenda</option>
+              </select>
+            </div>
+          )}
 
-    const toHours = (min) => {
-      const safe = Number.isFinite(min) ? min : 0;
-      const h = Math.floor(safe / 60);
-      const m = safe % 60;
-      return `${h}h ${m}m`;
-    };
+          {/* Export */}
+          {view === Views.MONTH && (
+            <button className="export-btn" onClick={handleExportPNG}>
+              Exportovat jako PNG
+            </button>
+          )}
 
-    return (
-      <div className="calendar-with-summary">
-        <div className="calendar-left">
+          {/* Kalendář */}
           <DnDCalendar
             localizer={localizer}
             events={events}
@@ -632,8 +511,6 @@ const CalendarPage = () => {
             onEventResize={handleEventResize}
             onSelectSlot={handleSelectSlot}
             onSelectEvent={handleSelectEvent}
-            onDoubleClickEvent={handleSelectEvent}
-            longPressThreshold={50}
             popup
             eventPropGetter={getEventStyle}
             components={{ event: CustomEvent }}
@@ -641,11 +518,7 @@ const CalendarPage = () => {
             date={date}
             onView={setView}
             onNavigate={setDate}
-            style={{
-              height: calendarHeight,
-              fontSize: calendarFont,
-              touchAction: "manipulation",
-            }}
+            style={{ height: calendarHeight, fontSize: calendarFont }}
             messages={{
               next: "Další",
               previous: "Předchozí",
@@ -656,156 +529,14 @@ const CalendarPage = () => {
               agenda: "Agenda",
             }}
           />
-        </div>
 
-        {/* Sloupec souhrnů podle týdne */}
-        <div className="calendar-summary-column">
-          {weeks.map((weekStart, idx) => {
-            const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
-            const weekEvents = events.filter(
-              (e) =>
-                e.category === "SPORT" &&
-                e.start >= weekStart &&
-                e.start <= weekEnd
-            );
-            const totals = {
-              RUNNING: 0,
-              CYCLING: 0,
-              SWIMMING: 0,
-              OTHER: 0,
-            };
-            weekEvents.forEach((e) => {
-              const dur = e.duration || 0;
-              const key =
-                e.sportType && totals[e.sportType] !== undefined
-                  ? e.sportType
-                  : "OTHER";
-              totals[key] += dur;
-            });
-            return (
-              <div key={idx} className="summary-row">
-                <div className="summary-week-label">
-                  {format(weekStart, "d.M.")} –{" "}
-                  {format(weekEnd, "d.M.")}
-                </div>
-                <div className="summary-icons">
-                  <div className="sport-item">
-                    <img src={runIcon} alt="běh" />
-                    <span>{toHours(totals.RUNNING)}</span>
-                  </div>
-                  <div className="sport-item">
-                    <img src={bikeIcon} alt="kolo" />
-                    <span>{toHours(totals.CYCLING)}</span>
-                  </div>
-                  <div className="sport-item">
-                    <img src={swimIcon} alt="plavání" />
-                    <span>{toHours(totals.SWIMMING)}</span>
-                  </div>
-                  <div className="sport-item">
-                    <img src={otherIcon} alt="jiné" />
-                    <span>{toHours(totals.OTHER)}</span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  };
-
-  // Export měsíčního pohledu jako PNG
-  const handleExportPNG = async () => {
-    if (view !== Views.MONTH) {
-      alert("Export je dostupný pouze v měsíčním pohledu.");
-      return;
-    }
-
-    const exportElement = document.querySelector(".calendar-with-summary");
-    if (!exportElement) {
-      alert("Nelze najít obsah k exportu.");
-      return;
-    }
-
-    try {
-      const canvas = await html2canvas(exportElement, {
-        backgroundColor: "#ffffff",
-        scale: 2,
-        useCORS: true,
-      });
-
-      const link = document.createElement("a");
-      link.download = `WeekFitter-Mesic-${format(
-        date,
-        "MM-yyyy"
-      )}.png`;
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    } catch (err) {
-      console.error("Chyba při exportu:", err);
-      alert("Došlo k chybě při exportu kalendáře.");
-    }
-  };
-
-    // Hlavní render komponenty
-  return (
-    <>
-      <Header />
-      <main className="calendar-container">
-        <div className="calendar-card">
-          <h2>Kalendář aktivit</h2>
-
-          {/* Tlačítko exportu */}
-          {view === Views.MONTH && (
-            <button
-              className="export-btn"
-              onClick={handleExportPNG}
-              title="Uložit aktuální měsíc jako obrázek"
-            >
-              Exportovat jako PNG
-            </button>
+          {/* Spodní bar pro mobil */}
+          {isMobile && (
+            <div className="bottom-bar">
+              <button onClick={() => setShowModal(true)}>➕ Nová</button>
+              <button onClick={handleExportPNG}>📤 Export</button>
+            </div>
           )}
-
-          {/* Kalendář nebo měsíční přehled */}
-          {view === Views.MONTH
-            ? renderWeeklySummaryAllWeeks()
-            : (
-              <DnDCalendar
-                localizer={localizer}
-                events={events}
-                startAccessor="start"
-                endAccessor="end"
-                selectable
-                resizable
-                onEventDrop={handleEventDrop}
-                onEventResize={handleEventResize}
-                onSelectSlot={handleSelectSlot}
-                onSelectEvent={handleSelectEvent}
-                onDoubleClickEvent={handleSelectEvent}
-                longPressThreshold={50}
-                popup
-                eventPropGetter={getEventStyle}
-                components={{ event: CustomEvent }}
-                view={view}
-                date={date}
-                onView={setView}
-                onNavigate={setDate}
-                style={{
-                  height: calendarHeight,
-                  fontSize: calendarFont,
-                  touchAction: "manipulation",
-                }}
-                messages={{
-                  next: "Další",
-                  previous: "Předchozí",
-                  today: "Dnes",
-                  month: "Měsíc",
-                  week: "Týden",
-                  day: "Den",
-                  agenda: "Agenda",
-                }}
-              />
-            )}
 
           {/* Modal */}
           {showModal && (
@@ -813,7 +544,6 @@ const CalendarPage = () => {
               <div className="modal-content">
                 <h3>{selectedEvent ? "Upravit událost" : "Přidat novou událost"}</h3>
                 <form onSubmit={handleSubmit}>
-                  
                   <label>Název:</label>
                   <input
                     type="text"
@@ -840,7 +570,6 @@ const CalendarPage = () => {
 
                       <label>Typ sportu:</label>
                       <select
-                        className="sport-select"
                         value={formData.sportType}
                         onChange={(e) =>
                           setFormData({ ...formData, sportType: e.target.value })
@@ -854,9 +583,11 @@ const CalendarPage = () => {
 
                       <label>Popis aktivity:</label>
                       <textarea
-                        className="sport-textarea"
                         value={formData.sportDescription}
-                        onInput={autoResize}
+                        onInput={(e) => {
+                          e.target.style.height = "auto";
+                          e.target.style.height = `${e.target.scrollHeight}px`;
+                        }}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
@@ -867,7 +598,6 @@ const CalendarPage = () => {
 
                       <label>Trvání (minuty):</label>
                       <input
-                        className="sport-input"
                         type="number"
                         value={formData.duration}
                         onChange={handleDurationChange}
@@ -875,7 +605,6 @@ const CalendarPage = () => {
 
                       <label>Vzdálenost (km):</label>
                       <input
-                        className="sport-input"
                         type="number"
                         value={formData.distance}
                         onChange={(e) =>
@@ -885,7 +614,6 @@ const CalendarPage = () => {
 
                       <label>Soubor GPX/JSON:</label>
                       <input
-                        className="sport-file"
                         type="file"
                         accept=".gpx,.json"
                         onChange={(e) =>
@@ -895,7 +623,6 @@ const CalendarPage = () => {
                           })
                         }
                       />
-
                       {formData.filePath && (
                         <div className="file-download">
                           <a
@@ -910,14 +637,16 @@ const CalendarPage = () => {
                     </div>
                   ) : (
                     <>
-                      {/* Non-sport sekce */}
                       <div className="allday-row">
                         <input
                           id="allday"
                           type="checkbox"
                           checked={formData.allDay}
                           onChange={(e) =>
-                            setFormData({ ...formData, allDay: e.target.checked })
+                            setFormData({
+                              ...formData,
+                              allDay: e.target.checked,
+                            })
                           }
                         />
                         <label htmlFor="allday">Celý den</label>
@@ -925,9 +654,11 @@ const CalendarPage = () => {
 
                       <label>Popis:</label>
                       <textarea
-                        className="desc-textarea"
                         value={formData.description}
-                        onInput={autoResize}
+                        onInput={(e) => {
+                          e.target.style.height = "auto";
+                          e.target.style.height = `${e.target.scrollHeight}px`;
+                        }}
                         onChange={(e) =>
                           setFormData({
                             ...formData,
@@ -938,7 +669,7 @@ const CalendarPage = () => {
                     </>
                   )}
 
-                  {/* Časy začátku a konce */}
+                  {/* Časy */}
                   {!formData.allDay && (
                     <div className="time-row">
                       <div>
@@ -964,29 +695,17 @@ const CalendarPage = () => {
                     </div>
                   )}
 
-                  {/* Upozornění */}    
+                  {/* Notifikace */}
                   <div className="notification-section">
                     <h4>Upozornění</h4>
-                    {notifications.length === 0 && (
-                      <button
-                        type="button"
-                        onClick={() => setNotifications([60])}
-                        className="add-notify-btn"
-                      >
-                        Přidat upozornění
-                      </button>
-                    )}
-
                     {notifications.map((min, i) => (
                       <div key={i} className="notify-row">
-                        <label>Upozornit před začátkem:</label>
+                        <label>Upozornit před:</label>
                         <select
-                          className="notify-select"
                           value={min}
                           onChange={(e) => {
-                            const v = Number(e.target.value);
                             const copy = [...notifications];
-                            copy[i] = v;
+                            copy[i] = Number(e.target.value);
                             setNotifications(copy);
                           }}
                         >
@@ -999,7 +718,6 @@ const CalendarPage = () => {
                           <option value={2880}>2 dny</option>
                           <option value={10080}>1 týden</option>
                         </select>
-
                         <button
                           type="button"
                           className="close-notify-btn"
@@ -1009,24 +727,20 @@ const CalendarPage = () => {
                             )
                           }
                         >
-                          X
+                          ✖
                         </button>
                       </div>
                     ))}
-
-                    {notifications.length > 0 && (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setNotifications([...notifications, 60])
-                        }
-                        className="add-notify-btn"
-                      >
-                        Další upozornění
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      className="add-notify-btn"
+                      onClick={() => setNotifications([...notifications, 60])}
+                    >
+                      ➕ Další upozornění
+                    </button>
                   </div>
 
+                  {/* Tlačítka */}
                   <div className="modal-buttons">
                     <button type="submit">
                       {selectedEvent ? "Uložit" : "Přidat"}
@@ -1059,4 +773,3 @@ const CalendarPage = () => {
 };
 
 export default CalendarPage;
-
