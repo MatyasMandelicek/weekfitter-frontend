@@ -722,44 +722,27 @@
 }
 
 
-/* === Čitelné datum v týdenním pohledu === */
+/* === FIX 2: Čitelné datum v týdenním pohledu === */
 @media (max-width: 768px) {
-/* Kontejner pro dny */
   .rbc-time-header-content {
     display: flex;
   }
 
-  /* Každá buňka dne */
+  .rbc-time-header-gutter {
+    font-size: 0.85rem !important;
+  }
+
   .rbc-time-header-cell {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    padding: 6px 4px !important;
-    font-size: 0.8rem !important;
-    font-weight: 600;
+    
   }
 
-  /* horní text – zkratka dne */
-  .rbc-time-header-cell > span:first-child {
-    font-size: 0.75rem;
-    font-weight: 600;
-    opacity: 0.9;
-    margin-bottom: 2px;
-  }
-
-  /* dolní text – den v měsíci (číslo) */
-  .rbc-time-header-cell > span:last-child {
-    font-size: 0.85rem;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  /* Celý týdenní pohled posouvat do strany */
   .rbc-time-view {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
 }
 

@@ -722,7 +722,7 @@
 }
 
 
-/* === Čitelné datum v týdenním pohledu === */
+/* === FIX 2: Čitelné datum v týdenním pohledu === */
 @media (max-width: 768px) {
 /* Kontejner pro dny */
   .rbc-time-header-content {
@@ -732,7 +732,7 @@
   /* Každá buňka dne */
   .rbc-time-header-cell {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;     /* text nad číslem */
     align-items: center;
     justify-content: center;
     white-space: nowrap;

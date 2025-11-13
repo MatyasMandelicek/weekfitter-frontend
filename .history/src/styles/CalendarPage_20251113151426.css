@@ -722,7 +722,7 @@
 }
 
 
-/* === Čitelné datum v týdenním pohledu === */
+/* === FIX 2: Čitelné datum v týdenním pohledu === */
 @media (max-width: 768px) {
 /* Kontejner pro dny */
   .rbc-time-header-content {
