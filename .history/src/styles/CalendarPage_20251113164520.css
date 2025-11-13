@@ -846,37 +846,5 @@
     line-height: 1;
   }
 }
-/* === FIX: Mobil – datum pod sebou v TÝDENNÍM pohledu === */
-@media (max-width: 768px) {
-
-  /* Hlavička týdne (Po + 13 pod sebou) */
-  .custom-day-header {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 4px 0 !important;
-    line-height: 1.1;
-    gap: 2px;
-  }
-
-  .custom-day-header .day-name {
-    font-size: 0.75rem;
-    font-weight: 600;
-    opacity: 0.85;
-    margin: 0;
-  }
-
-  .custom-day-header .day-number {
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin: 0;
-  }
-
-  /* Aby se text nezalamoval do strany */
-  .rbc-time-header-cell {
-    white-space: normal !important;
-  }
-}
 
 
