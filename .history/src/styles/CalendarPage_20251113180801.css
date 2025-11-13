@@ -778,36 +778,6 @@
   }
 }
 
-/* === WEEK VIEW – zachovat layout, jen zalomit === */
-@media (max-width: 768px) {
-
-  .rbc-time-header-content .rbc-header {
-    padding: 0 !important;
-    height: 42px !important;
-    text-align: center;
-  }
-
-  .wf-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    line-height: 1.1;
-  }
-
-  .wf-header-day {
-    font-size: 0.75rem;
-    font-weight: 600;
-    opacity: 0.85;
-  }
-
-  .wf-header-num {
-    font-size: 0.9rem;
-    font-weight: 700;
-  }
-}
-
-
 
 
 

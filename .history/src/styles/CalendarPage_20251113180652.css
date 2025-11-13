@@ -778,19 +778,18 @@
   }
 }
 
-/* === WEEK VIEW – zachovat layout, jen zalomit === */
 @media (max-width: 768px) {
 
+  /* jen změníme obsah, ne výšku */
   .rbc-time-header-content .rbc-header {
-    padding: 0 !important;
-    height: 42px !important;
+    padding: 2px 0 !important;
     text-align: center;
+    height: 42px !important;
   }
 
   .wf-header {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     line-height: 1.1;
   }
@@ -806,9 +805,6 @@
     font-weight: 700;
   }
 }
-
-
-
 
 
 
