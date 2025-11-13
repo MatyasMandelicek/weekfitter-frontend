@@ -145,42 +145,74 @@
   flex-direction: column;
   justify-content: flex-start;
   border-bottom: 1px solid #ddd;
-  padding: 10px 6px 14px 6px;
-  height: auto;
-}
-
-.summary-row:last-child {
-  border-bottom: none;
+  padding: 10px 6px 14px 6px;  /* více prostoru */
+  height: auto;               /* už se nesmí fixně natahovat */
 }
 
 .summary-week-label {
   font-weight: 700;
   color: #333;
-  font-size: 1rem;
+  font-size: 1rem;          /* větší a čitelnější */
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 10px;      /* větší mezera pod datem */
 }
 
 .summary-icons {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.summary-total {
-  text-align: center;
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 4px;
-  margin-bottom: 6px;
+  gap: 6px;                 /* trochu větší mezery */
+  margin-bottom: 6px;       /* aby se nelepily na “Celkem” */
 }
 
 .sport-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 0.9rem;
+}
+
+.sport-item img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(0.4) sepia(1) hue-rotate(10deg) saturate(6);
+}
+
+.summary-total {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.85rem;      /* menší než datum */
+  color: #666;             /* jemnější barva */
+  margin-top: 4px;         /* malá mezera nad */
+  margin-bottom: 6px;      /* mezera před čárou */
+}
+
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-week-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.summary-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.summary-total {
+  text-align: center;
+  font-weight: 600;
+}
+
+.sport-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 0.9rem;
 }
 

@@ -145,8 +145,8 @@
   flex-direction: column;
   justify-content: flex-start;
   border-bottom: 1px solid #ddd;
-  padding: 10px 6px 14px 6px;
-  height: auto;
+  padding: 10px 6px 14px 6px;  /* více prostoru */
+  height: auto;               /* už se nesmí fixně natahovat */
 }
 
 .summary-row:last-child {
@@ -154,33 +154,27 @@
 }
 
 .summary-week-label {
-  font-weight: 700;
+  font-weight: 600;
   color: #333;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .summary-icons {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 6px;
+  gap: 4px;
 }
-
 .summary-total {
   text-align: center;
   font-weight: 600;
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 4px;
-  margin-bottom: 6px;
 }
 
 .sport-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   font-size: 0.9rem;
 }
 

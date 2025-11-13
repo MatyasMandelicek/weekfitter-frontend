@@ -171,10 +171,10 @@
 .summary-total {
   text-align: center;
   font-weight: 600;
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 4px;
-  margin-bottom: 6px;
+  font-size: 0.85rem;      /* menší než datum */
+  color: #666;             /* jemnější barva */
+  margin-top: 4px;         /* malá mezera nad */
+  margin-bottom: 6px;      /* mezera před čárou */
 }
 
 .sport-item {
