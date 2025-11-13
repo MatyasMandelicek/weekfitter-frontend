@@ -814,6 +814,7 @@ const CalendarPage = () => {
                     );
                   }
                 }}
+
                 view={view}
                 date={date}
                 onView={setView}
