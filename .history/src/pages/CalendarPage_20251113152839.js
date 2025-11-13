@@ -794,21 +794,23 @@ const CalendarPage = () => {
                 popup
                 eventPropGetter={getEventStyle}
                 components={{
-                  event: CustomEvent,
+                event: CustomEvent,
 
-                  timeHeaderCell: ({ label }) => {
-                    const dateObj = new Date(label);
-                    const day = dateObj.toLocaleDateString("cs-CZ", { weekday: "short" }); 
-                    const dayNum = dateObj.getDate();
+                timeHeaderCell: ({ label }) => {
+                  const dateObj = new Date(label);
+                  const day = dateObj.toLocaleDateString("cs-CZ", { weekday: "short" }); 
+                  const dayNum = dateObj.getDate();
 
-                    return (
-                      <div className="custom-day-header">
-                        <span className="day-name">{day}</span>
-                        <span className="day-number">{dayNum}</span>
-                      </div>
-                    );
-                  }
-                }}
+                  return (
+                    <div className="custom-day-header">
+                      <span className="day-name">{day}</span>
+                      <span className="day-number">{dayNum}</span>
+                    </div>
+                  );
+                }
+              }}
+
+
                 view={view}
                 date={date}
                 onView={setView}
