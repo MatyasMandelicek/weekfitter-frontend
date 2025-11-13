@@ -798,7 +798,7 @@ const CalendarPage = () => {
 
                   header: ({ date }) => {
                     const dayShort = date
-                      .toLocaleDateString("en-US", { weekday: "short" })
+                      .toLocaleDateString("cs-US", { weekday: "short" })
                       .replace(".", "");
 
                     const dayNum = date.getDate();
