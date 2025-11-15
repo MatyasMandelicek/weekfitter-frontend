@@ -74,27 +74,29 @@ const ProfilePage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "gender") {
-      setUserData((prev) => {
-        const defaultAvatars = [
-          "/avatars/male_avatar.png",
-          "/avatars/female_avatar.png",
-          "/avatars/neutral_avatar.png"
-        ];
+if (name === "gender") {
+  setUserData((prev) => {
+    // Cesty, které označují DEFAULT avatary
+    const defaultAvatars = [
+      "/avatars/male_avatar.png",
+      "/avatars/female_avatar.png",
+      "/avatars/neutral_avatar.png"
+    ];
 
-        const isDefaultAvatar = defaultAvatars.some(defaultPath =>
-          prev.photo?.includes(defaultPath)
-        );
+    const isDefaultAvatar = defaultAvatars.some(defaultPath =>
+      prev.photo?.includes(defaultPath)
+    );
 
-        return {
-          ...prev,
-          gender: value,
-          photo: isDefaultAvatar ? getDefaultAvatar(value) : prev.photo,
-        };
-      });
+    return {
+      ...prev,
+      gender: value,
+      // Pokud je defaultní avatar → změníme ho
+      photo: isDefaultAvatar ? getDefaultAvatar(value) : prev.photo,
+    };
+  });
 
-      return;
-    }
+  return;
+}
 
 
     setUserData((prev) => ({ ...prev, [name]: value }));

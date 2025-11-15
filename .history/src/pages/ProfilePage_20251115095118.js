@@ -76,6 +76,7 @@ const ProfilePage = () => {
 
     if (name === "gender") {
       setUserData((prev) => {
+        // Cesty, které označují DEFAULT avatary
         const defaultAvatars = [
           "/avatars/male_avatar.png",
           "/avatars/female_avatar.png",
@@ -89,6 +90,7 @@ const ProfilePage = () => {
         return {
           ...prev,
           gender: value,
+          // Pokud je defaultní avatar → změníme ho
           photo: isDefaultAvatar ? getDefaultAvatar(value) : prev.photo,
         };
       });

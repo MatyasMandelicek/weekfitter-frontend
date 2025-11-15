@@ -89,6 +89,7 @@ const ProfilePage = () => {
         return {
           ...prev,
           gender: value,
+          // Pokud je defaultní avatar → změníme ho
           photo: isDefaultAvatar ? getDefaultAvatar(value) : prev.photo,
         };
       });
