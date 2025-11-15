@@ -79,6 +79,7 @@ const ProfilePage = () => {
         ...prev,
         gender: value,
       }));
+      setAvatarRefresh((prev) => prev + 1);
       return;
     }
 

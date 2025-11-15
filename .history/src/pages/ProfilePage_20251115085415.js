@@ -78,7 +78,9 @@ const ProfilePage = () => {
       setUserData((prev) => ({
         ...prev,
         gender: value,
+        photo: newAvatar,
       }));
+      setAvatarRefresh((prev) => prev + 1);
       return;
     }
 
