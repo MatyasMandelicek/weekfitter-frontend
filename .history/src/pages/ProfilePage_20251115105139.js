@@ -99,78 +99,79 @@ const ProfilePage = () => {
   };
 
 
-  // Upload nové profilové fotky – nově přes Supabase Storage
-  const handlePhotoUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+// Upload nové profilové fotky – nově přes Supabase Storage
+const handlePhotoUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-    if (!email) {
-      setMessage({ type: "error", text: "Chybí e-mail uživatele." });
+  if (!email) {
+    setMessage({ type: "error", text: "Chybí e-mail uživatele." });
+    return;
+  }
+
+  try {
+    // unikátní cesta souboru v bucketu
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const filePath = `${email}/${fileName}`; // složka podle e-mailu
+
+    // 1) Upload do Supabase Storage
+    const { data, error } = await supabase.storage
+      .from("profile-photos") // <== jméno bucketu
+      .upload(filePath, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (error) {
+      console.error("Supabase upload error:", error);
+      setMessage({ type: "error", text: "Chyba při nahrávání fotky (Supabase)." });
       return;
     }
 
-    try {
-      // unikátní cesta souboru v bucketu
-      const fileExt = file.name.split(".").pop();
-      const fileName = `${Date.now()}.${fileExt}`;
-      const filePath = `${email}/${fileName}`; // složka podle e-mailu
+    // 2) Získání veřejné URL
+    const { data: publicData } = supabase.storage
+      .from("profile-photos")
+      .getPublicUrl(filePath);
 
-      // 1) Upload do Supabase Storage
-      const { data, error } = await supabase.storage
-        .from("profile-photos") // <== jméno bucketu
-        .upload(filePath, file, {
-          cacheControl: "3600",
-          upsert: true,
-        });
+    const publicUrl = publicData?.publicUrl;
 
-      if (error) {
-        console.error("Supabase upload error:", error);
-        setMessage({ type: "error", text: "Chyba při nahrávání fotky (Supabase)." });
-        return;
-      }
-
-      // 2) Získání veřejné URL
-      const { data: publicData } = supabase.storage
-        .from("profile-photos")
-        .getPublicUrl(filePath);
-
-      const publicUrl = publicData?.publicUrl;
-
-      if (!publicUrl) {
-        setMessage({ type: "error", text: "Nepodařilo se získat URL fotky." });
-        return;
-      }
-
-      // 3) Uložení URL do backendu (DB)
-      const saveResponse = await fetch(
-        `${API_URL}/api/users/profile?email=${encodeURIComponent(email)}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ photo: publicUrl }),
-        }
-      );
-
-      if (!saveResponse.ok) {
-        setMessage({ type: "error", text: "Fotka byla nahrána, ale nepodařilo se ji uložit v profilu." });
-        return;
-      }
-
-      const updatedUser = await saveResponse.json();
-
-      // 4) Aktualizace lokálního stavu
-      setUserData((prev) => ({
-        ...prev,
-        photo: updatedUser.photo,
-      }));
-
-      setMessage({ type: "success", text: "Profilová fotka byla aktualizována!" });
-
-    } catch (error) {
-      console.error("Chyba při uploadu fotky:", error);
-      setMessage({ type: "error", text: "Chyba při nahrávání fotky." });
+    if (!publicUrl) {
+      setMessage({ type: "error", text: "Nepodařilo se získat URL fotky." });
+      return;
     }
-  };
+
+    // 3) Uložení URL do backendu (DB)
+    const saveResponse = await fetch(
+      `${API_URL}/api/users/profile?email=${encodeURIComponent(email)}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ photo: publicUrl }),
+      }
+    );
+
+    if (!saveResponse.ok) {
+      setMessage({ type: "error", text: "Fotka byla nahrána, ale nepodařilo se ji uložit v profilu." });
+      return;
+    }
+
+    const updatedUser = await saveResponse.json();
+
+    // 4) Aktualizace lokálního stavu
+    setUserData((prev) => ({
+      ...prev,
+      photo: updatedUser.photo,
+    }));
+
+    setMessage({ type: "success", text: "Profilová fotka byla aktualizována!" });
+
+  } catch (error) {
+    console.error("Chyba při uploadu fotky:", error);
+    setMessage({ type: "error", text: "Chyba při nahrávání fotky." });
+  }
+};
+
 
   // Uložení změn do databáze
   const handleSave = async (e) => {
