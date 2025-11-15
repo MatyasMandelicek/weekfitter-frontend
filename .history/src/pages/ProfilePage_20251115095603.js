@@ -76,6 +76,7 @@ const ProfilePage = () => {
 
     if (name === "gender") {
       setUserData((prev) => {
+        // Má uživatel vlastní fotku?
         const hasCustomPhoto =
           prev.photo &&                        
           prev.photo !== "null" &&

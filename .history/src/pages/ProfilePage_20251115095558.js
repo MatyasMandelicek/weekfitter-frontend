@@ -76,16 +76,19 @@ const ProfilePage = () => {
 
     if (name === "gender") {
       setUserData((prev) => {
+        // Má uživatel vlastní fotku?
         const hasCustomPhoto =
           prev.photo &&                        
           prev.photo !== "null" &&
           prev.photo !== "undefined" &&
           prev.photo.trim() !== "" &&
-          !prev.photo.startsWith("/avatars/");
+          !prev.photo.startsWith("/avatars/");  // není jeden z default avatarů
 
         return {
           ...prev,
           gender: value,
+          // pokud má vlastní fotku → nech ji
+          // pokud ne → nastav nový default podle pohlaví
           photo: hasCustomPhoto ? prev.photo : getDefaultAvatar(value),
         };
       });

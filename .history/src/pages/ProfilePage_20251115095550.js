@@ -71,31 +71,34 @@ const ProfilePage = () => {
 
 
   // Změna údajů ve formuláři
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+const handleChange = (e) => {
+  const { name, value } = e.target;
 
-    if (name === "gender") {
-      setUserData((prev) => {
-        const hasCustomPhoto =
-          prev.photo &&                        
-          prev.photo !== "null" &&
-          prev.photo !== "undefined" &&
-          prev.photo.trim() !== "" &&
-          !prev.photo.startsWith("/avatars/");
+  if (name === "gender") {
+    setUserData((prev) => {
+      // Má uživatel vlastní fotku?
+      const hasCustomPhoto =
+        prev.photo &&                         // není null / undefined
+        prev.photo !== "null" &&
+        prev.photo !== "undefined" &&
+        prev.photo.trim() !== "" &&
+        !prev.photo.startsWith("/avatars/");  // není jeden z default avatarů
 
-        return {
-          ...prev,
-          gender: value,
-          photo: hasCustomPhoto ? prev.photo : getDefaultAvatar(value),
-        };
-      });
+      return {
+        ...prev,
+        gender: value,
+        // pokud má vlastní fotku → nech ji
+        // pokud ne → nastav nový default podle pohlaví
+        photo: hasCustomPhoto ? prev.photo : getDefaultAvatar(value),
+      };
+    });
 
-      setAvatarRefresh((prev) => prev + 1);
-      return;
-    }
+    setAvatarRefresh((prev) => prev + 1);
+    return;
+  }
 
-    setUserData((prev) => ({ ...prev, [name]: value }));
-  };
+  setUserData((prev) => ({ ...prev, [name]: value }));
+};
 
 
   // Upload nové profilové fotky
