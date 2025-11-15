@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import "../styles/ProfilePage.css";
 import { API_URL } from "../lib/config";
-import { supabase } from "../lib/supabaseClient";
+import {supabase} from "../lib/supabaseClient";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
