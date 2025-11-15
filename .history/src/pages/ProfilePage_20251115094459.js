@@ -74,22 +74,23 @@ const ProfilePage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "gender") {
-      setUserData((prev) => {
-        const isDefaultAvatar =
-          prev.photo === "/avatars/male_avatar.png" ||
-          prev.photo === "/avatars/female_avatar.png" ||
-          prev.photo === "/avatars/neutral_avatar.png";
+if (name === "gender") {
+  setUserData((prev) => {
+    const isDefaultAvatar =
+      prev.photo === "/avatars/male_avatar.png" ||
+      prev.photo === "/avatars/female_avatar.png" ||
+      prev.photo === "/avatars/neutral_avatar.png";
 
-        return {
-          ...prev,
-          gender: value,
-          photo: isDefaultAvatar ? getDefaultAvatar(value) : prev.photo,
-        };
-      });
+    return {
+      ...prev,
+      gender: value,
+      photo: isDefaultAvatar ? getDefaultAvatar(value) : prev.photo,
+    };
+  });
 
-      return;
-    }
+  return;
+}
+
 
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
