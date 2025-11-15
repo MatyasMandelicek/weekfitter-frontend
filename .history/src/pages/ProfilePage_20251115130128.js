@@ -114,7 +114,8 @@ const ProfilePage = () => {
       const fileExt = file.name.split(".").pop();
       const fileName = `${Date.now()}.${fileExt}`;
       const safeFolder = email.replace(/[^a-zA-Z0-9_-]/g, "_");
-      const filePath = `${safeFolder}/${fileName}`;
+const filePath = `${safeFolder}/${fileName}`;
+
 
       // 1) Upload do Supabase Storage
       const { data, error } = await supabase.storage
