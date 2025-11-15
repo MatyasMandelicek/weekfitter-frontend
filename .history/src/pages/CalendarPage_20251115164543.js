@@ -462,14 +462,27 @@ const CalendarPage = () => {
     // Upload souboru (pokud existuje)
     let uploadedFilePath = formData.filePath;
     if (formData.file) {
-      const fileUrl = await uploadTrainingFile(formData.file, email);
-      if (!fileUrl) {
+      const uploadData = new FormData();
+      uploadData.append("file", formData.file);
 
+      try {
+        const uploadRes = await fetch(`${API_URL}/api/files/upload`, {
+          method: "POST",
+          body: uploadData,
+        });
+
+        if (!uploadRes.ok) {
+          const msg = await uploadRes.text();
+          alert("Chyba při nahrávání souboru: " + msg);
+          return;
+        }
+
+        uploadedFilePath = await uploadRes.text();
+      } catch (error) {
+        alert("Chyba spojení s backendem při nahrávání souboru.");
         return;
       }
-      uploadedFilePath = fileUrl;
     }
-
 
     // Příprava payloadu
     const payload = {
@@ -962,7 +975,7 @@ const CalendarPage = () => {
                       {formData.filePath && (
                         <div className="file-download">
                           <a
-                            href={formData.filePath}
+                            href={`${API_URL}${formData.filePath}`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -970,7 +983,6 @@ const CalendarPage = () => {
                           </a>
                         </div>
                       )}
-
                     </div>
                   ) : (
                     <>

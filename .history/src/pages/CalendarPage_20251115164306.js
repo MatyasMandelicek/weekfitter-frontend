@@ -15,6 +15,8 @@ import { Calendar, dateFnsLocalizer, Views } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { API_URL } from "../lib/config";
+import { supabase } from "../lib/supabaseClient";  // ← PŘIDAT
 
 
 import {
@@ -33,7 +35,6 @@ import { cs } from "date-fns/locale";
 import Header from "../components/Header";
 import "../styles/CalendarPage.css";
 import { API_URL } from "../lib/config";
-import { supabase } from "../lib/supabaseClient";
 
 import runIcon from "../assets/icons/run.png";
 import bikeIcon from "../assets/icons/bike.png";
@@ -396,55 +397,6 @@ const CalendarPage = () => {
     };
   };
 
-  // Upload tréninkového souboru do Supabase Storage (bucket event-files)
-  const uploadTrainingFile = async (file, email) => {
-    if (!file) return null;
-
-    if (!email) {
-      alert("Chybí e-mail uživatele, nelze nahrát soubor.");
-      return null;
-    }
-
-    try {
-      // Bezpečný název složky z e-mailu (bez @, teček atd.)
-      const safeFolder = email.replace(/[^a-zA-Z0-9_-]/g, "_");
-      const fileExt = file.name.split(".").pop();
-      const fileName = `${Date.now()}.${fileExt}`;
-      const filePath = `${safeFolder}/${fileName}`;
-
-      // Upload do Supabase Storage (bucket event-files)
-      const { error } = await supabase.storage
-        .from("event-files")
-        .upload(filePath, file, {
-          cacheControl: "3600",
-          upsert: true,
-        });
-
-      if (error) {
-        console.error("Supabase upload error (event file):", error);
-        alert("Chyba při nahrávání tréninkového souboru (Supabase).");
-        return null;
-      }
-
-      //Získání public URL
-      const { data: publicData } = supabase.storage
-        .from("event-files")
-        .getPublicUrl(filePath);
-
-      const publicUrl = publicData?.publicUrl;
-      if (!publicUrl) {
-        alert("Nepodařilo se získat URL pro tréninkový soubor.");
-        return null;
-      }
-
-      return publicUrl;
-    } catch (err) {
-      console.error("Chyba při nahrávání tréninkového souboru:", err);
-      alert("Chyba při nahrávání tréninkového souboru.");
-      return null;
-    }
-  };
-
   /* 
     Uložení (vytvoření / aktualizace) události
     Upload přiloženého souboru (např. GPX)
@@ -462,14 +414,27 @@ const CalendarPage = () => {
     // Upload souboru (pokud existuje)
     let uploadedFilePath = formData.filePath;
     if (formData.file) {
-      const fileUrl = await uploadTrainingFile(formData.file, email);
-      if (!fileUrl) {
+      const uploadData = new FormData();
+      uploadData.append("file", formData.file);
 
+      try {
+        const uploadRes = await fetch(`${API_URL}/api/files/upload`, {
+          method: "POST",
+          body: uploadData,
+        });
+
+        if (!uploadRes.ok) {
+          const msg = await uploadRes.text();
+          alert("Chyba při nahrávání souboru: " + msg);
+          return;
+        }
+
+        uploadedFilePath = await uploadRes.text();
+      } catch (error) {
+        alert("Chyba spojení s backendem při nahrávání souboru.");
         return;
       }
-      uploadedFilePath = fileUrl;
     }
-
 
     // Příprava payloadu
     const payload = {
@@ -962,7 +927,7 @@ const CalendarPage = () => {
                       {formData.filePath && (
                         <div className="file-download">
                           <a
-                            href={formData.filePath}
+                            href={`${API_URL}${formData.filePath}`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -970,7 +935,6 @@ const CalendarPage = () => {
                           </a>
                         </div>
                       )}
-
                     </div>
                   ) : (
                     <>

@@ -959,17 +959,17 @@ const CalendarPage = () => {
                         }
                       />
 
-                      {formData.filePath && (
-                        <div className="file-download">
-                          <a
-                            href={formData.filePath}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            📄 Stáhnout přiložený soubor
-                          </a>
-                        </div>
-                      )}
+{formData.filePath && (
+  <div className="file-download">
+    <a
+      href={formData.filePath}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      📄 Stáhnout přiložený soubor
+    </a>
+  </div>
+)}
 
                     </div>
                   ) : (
