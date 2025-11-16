@@ -249,7 +249,7 @@ const ProfilePage = () => {
               <input
                 id="photo"
                 type="file"
-                name="photo"
+                name="pt"
                 accept="image/*"
                 onChange={handlePhotoUpload}
                 style={{ display: "none" }}

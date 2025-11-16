@@ -25,7 +25,7 @@ const RegisterPage = () => {
     email: "",
     password: "",
     birthDate: "",
-    photo: "",
+    profilePicture: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,7 +41,7 @@ const RegisterPage = () => {
         ? "/avatars/female_avatar.png"
         : "/avatars/neutral_avatar.png";
 
-    setFormData((prev) => ({...prev, gender, photo: avatar }));
+    setFormData((prev) => ({...prev, gender, profilePicture: avatar }));
   };
   
   // Změna polí formuláře

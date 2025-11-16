@@ -247,9 +247,9 @@ const ProfilePage = () => {
                 Nahrát novou fotku
               </label>
               <input
-                id="photo"
+                id="profilePicture"
                 type="file"
-                name="photo"
+                name="profilePicture"
                 accept="image/*"
                 onChange={handlePhotoUpload}
                 style={{ display: "none" }}
