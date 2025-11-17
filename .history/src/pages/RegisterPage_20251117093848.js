@@ -57,10 +57,10 @@ const RegisterPage = () => {
     setLoading(true);
 
     if (!formData.gender) {
-      setErrorMessage("Vyberte prosím pohlaví.");
-      setLoading(false);
-      return;
-    }
+   setErrorMessage("Vyberte prosím pohlaví.");
+    setLoading(false);
+    return;
+  }
 
     try {
       const res = await fetch(`${API_URL}/api/users/register`, {

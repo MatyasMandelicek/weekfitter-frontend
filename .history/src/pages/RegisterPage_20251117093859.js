@@ -60,7 +60,7 @@ const RegisterPage = () => {
       setErrorMessage("Vyberte prosím pohlaví.");
       setLoading(false);
       return;
-    }
+  }
 
     try {
       const res = await fetch(`${API_URL}/api/users/register`, {
