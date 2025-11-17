@@ -1,0 +1,861 @@
+/* ============================================================
+   ZÁKLADNÍ LAYOUT KALENDÁŘOVÉ STRÁNKY
+   Kontejner stránky + hlavní karta s kalendářem
+   ============================================================ */
+
+.calendar-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(135deg, rgba(255, 106, 0, 0.95), rgba(238, 9, 121, 0.95)),
+    url("../assets/Triathlon.png");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  padding: 60px 20px;
+  color: white;
+}
+
+/* Pozadí celé stránky */
+.calendar-card {
+  background-color: rgba(255, 255, 255, 0.97);
+  color: #333;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+
+  /* Rozměry + animace */
+  max-width: 1400px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.calendar-card h2 {
+  color: #ff6a00;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* ============================================================
+   STYLING REACT-BIG-CALENDAR PRVKŮ
+   Úpravy měsíčního layoutu, událostí a aktivního dne
+   ============================================================ */
+
+.rbc-calendar {
+  background: white;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+/* Měsíční tabulka – kulaté rohy + stabilní výška */
+.rbc-month-view {
+  border-radius: 15px;
+}
+
+.rbc-month-row {
+  min-height: 130px;
+}
+
+/* Hlavičky dnů */
+.rbc-header {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 8px 0;
+}
+
+/* Čísla dnů */
+.rbc-date-cell {
+  padding: 6px;
+  font-size: 0.95rem;
+}
+
+/* Události v buňkách */
+.rbc-event {
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.rbc-event:hover {
+  transform: scale(1.05);
+}
+
+/* Dnešní den */
+.rbc-today {
+  background-color: rgba(255, 106, 0, 0.1);
+}
+
+/* Dny mimo aktuální měsíc */
+.rbc-off-range-bg {
+  background-color: #f0f0f0;
+}
+
+
+/* ============================================================
+   TOOLBAR KALENDÁŘE (navigace a přepínání pohledů)
+   ============================================================ */
+  
+.rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rbc-toolbar button {
+  background: none;
+  border: 2px solid #ff6a00;
+  color: #ff6a00;
+  border-radius: 8px;
+  padding: 5px 12px;
+  margin: 2px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #ff6a00;
+  color: white;
+}
+
+.rbc-toolbar .rbc-active {
+  background-color: #ff6a00;
+  color: white;
+  border-color: #ff6a00;
+}
+
+/* ============================================================
+   MĚSÍČNÍ POHLED – DVOUSESTAVCOVÝ LAYOUT
+   Levý: kalendář, Pravý: přehled sportů
+   ============================================================ */
+   
+.calendar-with-summary {
+  display: grid;
+  grid-template-columns: 2.2fr 0.8fr;
+  gap: 20px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.calendar-left {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.calendar-summary-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 15px;
+  padding: 40px;
+  min-height: 750px;
+  position: relative;
+  padding-top: 100px;
+}
+
+/* Jednotlivé týdny v přehledu */
+.summary-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 130px;
+  border-bottom: 1px solid #ddd;
+  padding: 6px;
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-week-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 1px;
+}
+
+/* Ikony a časy sportů */
+.summary-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-total {
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #555;
+  margin-top: 1px;
+  margin-bottom: 5px;
+  line-height: 1;
+}
+
+.sport-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.sport-item img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(0.4) sepia(1) hue-rotate(10deg) saturate(6);
+}
+
+.sport-item span {
+  font-weight: 600;
+  color: #333;
+}
+
+/* ============================================================
+   MODÁLNÍ OKNO – FORMULÁŘ PRO UDÁLOST
+   ============================================================ */
+   
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* formulář v modalu */
+.modal-content {
+  background: white;
+  color: #333;
+  padding: 30px;
+  border-radius: 15px;
+  width: 500px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-in-out;
+}
+
+.modal-content h3 {
+  color: #ff6a00;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* vstupy */
+.modal-content input,
+.modal-content select {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+  border-color: #ff6a00;
+  outline: none;
+}
+
+/* textarea */
+.modal-content textarea,
+.sport-section textarea,
+.desc-textarea,
+.sport-textarea {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 0.95rem;
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+  min-height: 60px;
+  line-height: 1.4;
+  transition: height 0.2s ease;
+}
+
+.modal-content textarea:focus,
+.sport-section textarea:focus {
+  border-color: #ff6a00;
+  outline: none;
+}
+
+/* tlačítka v modalu */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+/* základ stylu tlačítek */
+.modal-content button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* základní oranžová tlačítka */
+.modal-content button[type="submit"],
+.add-notify-btn,
+.close-notify-btn,
+.orange-btn {
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  border: none;
+  color: #fff;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 10px rgba(238, 9, 121, 0.2);
+}
+
+.modal-content button[type="submit"]:hover,
+.add-notify-btn:hover,
+.close-notify-btn:hover,
+.orange-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #ee0979, #ff6a00);
+  box-shadow: 0 4px 15px rgba(255, 106, 0, 0.4);
+}
+
+/* delete */
+.modal-content .delete-btn {
+  background-color: #dc3545;
+  border-radius: 25px;
+}
+
+.modal-content .delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* cancel */
+.modal-content .cancel-btn {
+  background-color: #6c757d;
+  border-radius: 25px;
+}
+
+.modal-content .cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+/* ============================================================
+   SPORTOVNÍ SEKCE FORMULÁŘE (SPORT CATEGORY)
+   ============================================================ */
+   
+.sport-section {
+  margin-top: 15px;
+  background-color: rgba(255, 106, 0, 0.08);
+  border: 2px solid #ff6a00;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: left;
+}
+
+.sport-section h4 {
+  color: #ff6a00;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.sport-section label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-top: 6px;
+}
+
+.sport-section input[type="number"],
+.sport-section input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.sport-section input[type="file"] {
+  border: 1px dashed #ff6a00;
+  background-color: #fff7f0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sport-section input[type="file"]:hover {
+  background-color: #ffe8d5;
+}
+
+.allday-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.file-download {
+  margin-top: 8px;
+}
+
+.file-download a {
+  color: #ff6a00;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.file-download a:hover {
+  text-decoration: underline;
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.custom-event {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.event-icon-img {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+}
+
+/* === Notifikační sekce === */
+.notification-section {
+  margin-top: 20px;
+  background: linear-gradient(135deg, rgba(255, 106, 0, 0.1), rgba(255, 200, 150, 0.1));
+  border: 2px solid rgba(255, 106, 0, 0.4);
+  border-radius: 12px;
+  padding: 20px 25px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  box-shadow: 0 3px 12px rgba(255, 106, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: fadeInNotify 0.4s ease-in-out;
+}
+
+.notification-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px rgba(255, 106, 0, 0.25);
+}
+
+.notification-section h4 {
+  color: #ff6a00;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.notify-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.notify-row label {
+  white-space: nowrap;
+  font-weight: 600;
+  color: #333;
+  width: 160px;
+}
+
+.notify-select {
+  flex-grow: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 0.95rem;
+  color: #333;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.notify-select:focus {
+  border-color: #ff6a00;
+  box-shadow: 0 0 6px rgba(255, 106, 0, 0.4);
+  outline: none;
+}
+
+/* === Export tlačítko === */
+.export-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  padding: 10px 18px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 10px rgba(238, 9, 121, 0.25);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.export-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #ee0979, #ff6a00);
+  box-shadow: 0 4px 15px rgba(255, 106, 0, 0.4);
+}
+
+/* === Animace === */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInNotify {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === RESPONSIVITA – DESKTOP -> TABLET === */
+@media (max-width: 1100px) {
+  .calendar-with-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-summary-column {
+    order: 2;
+    min-height: auto;
+    padding: 20px;
+    padding-top: 20px;
+  }
+
+  .calendar-left {
+    order: 1;
+  }
+
+  .summary-row {
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .summary-icons {
+    flex-direction: row;
+    gap: 12px;
+    justify-content: space-around;
+  }
+
+  .calendar-card {
+    padding: 24px;
+  }
+}
+
+/* === Telefony (do 768 px) === */
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 30px 10px 40px;
+    align-items: stretch;
+  }
+
+  .calendar-card {
+    padding: 16px 14px 24px;
+    border-radius: 16px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.1);
+  }
+
+  .calendar-card h2 {
+    font-size: 1.6rem;
+    margin-bottom: 14px;
+  }
+
+  /* Kalendář a toolbar – přehlednější layout */
+  .rbc-calendar {
+    padding: 6px;
+    border-radius: 12px;
+    overflow-x: auto;
+  }
+
+  /* toolbar pod sebe – nahoře label, pod tím navigace, pod tím volby pohledu */
+  .rbc-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .rbc-toolbar > span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* label na samostatný řádek */
+  .rbc-toolbar-label {
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  /* navigační tlačítka (předchozí, dnes, další) */
+  .rbc-toolbar > span:first-child button {
+    flex: 1 1 30%;
+    min-width: 90px;
+  }
+
+  /* volby pohledu */
+  .rbc-toolbar > span:last-child button {
+    flex: 1 1 30%;
+    min-width: 90px;
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+
+  /* schovat "Agenda" na mobilu (poslední tlačítko v poslední skupině) */
+  .rbc-toolbar > span:last-child button:last-child {
+    display: none;
+  }
+
+  .rbc-header {
+    font-size: 0.85rem;
+    padding: 4px 0;
+  }
+
+  .rbc-date-cell {
+    font-size: 0.8rem;
+    padding: 3px;
+  }
+
+  .rbc-event {
+    font-size: 0.75rem;
+    padding: 1px 3px;
+    border-radius: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .calendar-summary-column {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .summary-week-label {
+    font-size: 0.85rem;
+  }
+
+  .sport-item span {
+    font-size: 0.85rem;
+  }
+
+  /* Modal – přizpůsobení výšce displeje */
+  .modal-content {
+    padding: 18px;
+    width: 95vw;
+    max-height: 85vh;
+    border-radius: 14px;
+  }
+
+  .modal-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .time-row {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .time-row > div {
+    width: 100%;
+  }
+
+  .time-row input[type="datetime-local"] {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .notify-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .notify-row label {
+    width: auto;
+    font-size: 0.9rem;
+  }
+
+  .notify-select {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .notification-section {
+    padding: 12px 14px;
+  }
+
+  .notification-section h4 {
+    font-size: 1rem;
+  }
+
+  .add-notify-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  html,
+  body {
+    scroll-behavior: smooth;
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* === FIX 1: Výška kalendáře – neusekávat === */
+@media (max-width: 768px) {
+  .rbc-time-view,
+  .rbc-month-view {
+    min-height: 680px !important;
+  }
+
+  .rbc-time-content {
+    min-height: 600px !important;
+  }
+}
+
+/* === FIX 3: Souhrny – zarovnání a čitelnost === */
+@media (max-width: 768px) {
+  .calendar-summary-column {
+    padding: 12px;
+  }
+
+  .summary-row {
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .summary-week-label {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .summary-icons {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .sport-item {
+    width: 48%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .summary-total {
+    margin-top: 6px;
+    margin-bottom: 0px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Ultra malé displeje (např. iPhone SE) */
+@media (max-width: 380px) {
+  .calendar-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .rbc-toolbar > span:first-child button,
+  .rbc-toolbar > span:last-child button {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+  }
+
+  .rbc-header,
+  .rbc-date-cell {
+    font-size: 0.7rem;
+  }
+
+  .rbc-event {
+    font-size: 0.7rem;
+  }
+}
+
+/* === WEEK VIEW – zachovat layout, jen zalomit === */
+@media (max-width: 768px) {
+
+  .rbc-time-header-content .rbc-header {
+    padding: 0 !important;
+    height: 42px !important;
+    text-align: center;
+  }
+
+  .wf-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.1;
+  }
+
+  .wf-header-day {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
+  .wf-header-num {
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+}
+
+
+
+
+
+
+
+

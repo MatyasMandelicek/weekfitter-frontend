@@ -1,0 +1,183 @@
+/**
+ * RegisterPage.css
+ *
+ * Styly pro registrační stránku:
+ *  - karta s formulářem
+ *  - výběr pohlaví pomocí avatarů
+ *  - hlášky o chybách a úspěchu
+ *  - responzivní úpravy
+ */
+
+/* Hlavní kontejner registrační stránky */
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(135deg, rgba(255, 106, 0, 0.95), rgba(238, 9, 121, 0.95)),
+    url("../assets/Triathlon.png");
+  background-size: cover;
+  background-position: center 49%;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  padding: 40px;
+}
+
+/* Karta registrace */
+.register-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Logo na registrační kartě */
+.register-logo {
+  width: 90px;
+  margin-bottom: 20px;
+}
+
+/* Nadpis „Registrace“ */
+.register-card h2 {
+  color: #ff6a00;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* Vstupní pole formuláře */
+.register-card input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.register-card input:focus {
+  border-color: #ff6a00;
+  box-shadow: 0 0 6px rgba(255, 106, 0, 0.3);
+}
+
+/* Tlačítko pro odeslání registrace */
+.register-card button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(238, 9, 121, 0.2);
+}
+
+.register-card button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #ee0979, #ff6a00);
+}
+
+.register-card button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Odkaz na přihlášení */
+.login-link {
+  margin-top: 20px;
+  display: inline-block;
+  color: #ff6a00;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.login-link:hover {
+  color: #e65c00;
+}
+
+.error-message,
+.success-message {
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.error-message { background-color: #cc0000; }
+.success-message { background-color: #2e7d32; }
+
+/* === Výběr pohlaví === */
+.gender-selection {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.gender-selection h4 {
+  margin-bottom: 12px;
+  color: #ff6a00;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.gender-options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.gender-options input[type="radio"] {
+  display: none;
+}
+
+.gender-options img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: white;
+  transition: border 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gender-options input[type="radio"]:checked + img {
+  border: 3px solid #ff6a00;
+  box-shadow: 0 0 15px rgba(255, 106, 0, 0.5);
+  transform: scale(1.05);
+}
+
+.gender-options img:hover {
+  transform: scale(1.05);
+}
+
+/* === Animace === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Responsivita === */
+@media (max-width: 640px) {
+  .register-container { padding: 24px 14px; }
+  .register-card { padding: 24px; border-radius: 16px; }
+  .register-logo { width: 70px; }
+  .register-card h2 { font-size: 1.4rem; }
+  .gender-options img { width: 70px; height: 70px; }
+}

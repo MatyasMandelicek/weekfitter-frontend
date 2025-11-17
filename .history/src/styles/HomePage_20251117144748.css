@@ -1,0 +1,71 @@
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(135deg, rgba(255, 106, 0, 0.95), rgba(238, 9, 121, 0.95)),
+    url("../assets/Triathlon.png");
+  background-size: cover;
+  background-position: center 49%;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  color: white;
+  text-align: center;
+  padding: 40px;
+  overflow: hidden;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.home-logo {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 30px;
+}
+
+.home-container h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.home-container p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.home-btn {
+  background: #fff;
+  color: #ff6a00;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.home-btn:hover {
+  background-color: #ffe2d1;
+  transform: translateY(-2px);
+}
+
+/* === Responsivita === */
+@media (max-width: 768px) {
+  .home-container { padding: 24px; }
+  .home-logo { width: 180px; height: 180px; }
+  .home-container h1 { font-size: 2.2rem; }
+  .home-container p { font-size: 1rem; margin-bottom: 30px; }
+  .home-btn { font-size: 1rem; padding: 12px 30px; }
+}
+
+/* === Animace === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

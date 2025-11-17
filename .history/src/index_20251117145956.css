@@ -1,0 +1,164 @@
+/**
+ * index.css
+ *
+ * Globální styly celé aplikace WeekFitter.
+ * Obsahují:
+ *  - CSS proměnné pro barvy a základní hodnoty
+ *  - reset stylů a typografii
+ *  - výchozí styl tlačítek
+ *  - univerzální PRIMARY tlačítko (gradient)
+ *  - základní responsivitu
+ *  - úpravy scrollbaru a obrázků
+ */
+
+/* === CSS PROMĚNNÉ === */
+:root {
+  --orange-light: #FFA500;
+  --orange-dark: #FF8C00;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --header-height: 60px;
+}
+
+/* ZÁKLADNÍ RESET A TYPOGRAFIE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;   /* žádný horizontální posuvník */
+  overflow-y: auto;     /* vertikální scroll jen při potřebě */
+  scroll-behavior: smooth;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* ODKAZY */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ZÁKLADNÍ TLAČÍTKO (fallback) */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  background-color: var(--orange-light);
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--orange-dark);
+  transform: scale(1.03);
+}
+
+/* --- 🔥 UNIVERZÁLNÍ ANIMOVANÉ TLAČÍTKO (PRIMARY) --- */
+.primary-btn {
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  color: #fff;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 10px rgba(238, 9, 121, 0.2);
+  display: inline-block;
+}
+
+.primary-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #ee0979, #ff6a00);
+  box-shadow: 0 4px 15px rgba(255, 106, 0, 0.4);
+}
+
+.primary-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(255, 106, 0, 0.3);
+}
+
+/* V MENŠÍM HEADERU (např. přihlásit / odhlásit) */
+.header .primary-btn {
+  padding: 8px 18px;
+  font-size: 0.95rem;
+}
+
+/* --- RESPONSIVITA --- */
+
+/* Velké obrazovky */
+@media (min-width: 1025px) {
+  main {
+    padding: 40px;
+  }
+}
+
+/* Notebooky a tablety na šířku */
+@media (max-width: 1024px) {
+  main {
+    padding: 30px;
+  }
+}
+
+/* Telefony (na výšku) */
+@media (max-width: 768px) {
+  main {
+    padding: 20px;
+  }
+
+  button, .primary-btn {
+    padding: 9px 18px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Menší telefony (např. iPhone SE) */
+@media (max-width: 480px) {
+  main {
+    padding: 15px;
+  }
+
+  button, .primary-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  h1, h2, h3 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+}
+
+/* LEPŠÍ ČITELNOST TEXTU */
+p, span, label {
+  line-height: 1.4;
+}
+
+/* OBRÁZKY SE NEROZTAHUJÍ */
+img {
+  max-width: 100%;
+  height: auto;
+  display: center;
+}
+
+/* FLEXBOX CENTRACE PRO HLAVNÍ STRÁNKY (login, register) */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - var(--header-height));
+}
+
+/* ODSTRANĚNÍ SCROLLBARU, POKUD NENÍ POTŘEBA */
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
