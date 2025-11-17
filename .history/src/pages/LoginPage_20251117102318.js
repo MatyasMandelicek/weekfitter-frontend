@@ -62,16 +62,16 @@ const LoginPage = () => {
         return;
       }
 
-      const data = await res.json();
+const data = await res.json();
 
-      if (data) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userEmail", data.email);
-        localStorage.setItem("userName", data.firstName);
-        localStorage.setItem("isLoggedIn", "true");
+if (data) {
+  localStorage.setItem("token", data.token);           // 🔥 DŮLEŽITÉ
+  localStorage.setItem("userEmail", data.email);
+  localStorage.setItem("userName", data.firstName);
+  localStorage.setItem("isLoggedIn", "true");
 
-        navigate("/home");
-      } else {
+  navigate("/home");
+} else {
         setErrorMessage("Nesprávný e-mail nebo heslo.");
       }
     } catch (error) {

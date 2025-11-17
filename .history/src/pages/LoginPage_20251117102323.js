@@ -65,11 +65,8 @@ const LoginPage = () => {
       const data = await res.json();
 
       if (data) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userEmail", data.email);
-        localStorage.setItem("userName", data.firstName);
         localStorage.setItem("isLoggedIn", "true");
-
+        localStorage.setItem("userEmail", formData.email);
         navigate("/home");
       } else {
         setErrorMessage("Nesprávný e-mail nebo heslo.");

@@ -550,9 +550,6 @@ const CalendarPage = () => {
     try {
       await fetch(`${API_URL}/api/events/${selectedEvent.id}`, {
         method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
-        }
       });
       setShowModal(false);
       setSelectedEvent(null);
@@ -590,7 +587,7 @@ const CalendarPage = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
           },
           body: JSON.stringify(payload),
         }
@@ -624,17 +621,18 @@ const CalendarPage = () => {
     );
 
     try {
-      const res = await fetch(
-        `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(email)}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+const res = await fetch(
+  `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(email)}`,
+  {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
+    },
+    body: JSON.stringify(payload),
+  }
+);
+
       if (!res.ok) {
         console.error(
           "Chyba při změně délky události:",

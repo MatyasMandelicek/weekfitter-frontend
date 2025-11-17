@@ -121,14 +121,14 @@ const CalendarPage = () => {
     }
 
     try {
-      const res = await fetch(
-        `${API_URL}/api/events?email=${encodeURIComponent(email)}`,
-        {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
-          }
-        }
-      );
+const res = await fetch(
+  `${API_URL}/api/events?email=${encodeURIComponent(email)}`,
+  {
+    headers: {
+      "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
+    }
+  }
+);
 
       const data = await res.json();
 
@@ -525,7 +525,6 @@ const CalendarPage = () => {
         method,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(payload),
       });
@@ -550,9 +549,6 @@ const CalendarPage = () => {
     try {
       await fetch(`${API_URL}/api/events/${selectedEvent.id}`, {
         method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
-        }
       });
       setShowModal(false);
       setSelectedEvent(null);
@@ -585,13 +581,12 @@ const CalendarPage = () => {
 
     try {
       const res = await fetch(
-        `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(email)}`,
+        `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(
+          email
+        )}`,
         {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         }
       );
@@ -625,13 +620,12 @@ const CalendarPage = () => {
 
     try {
       const res = await fetch(
-        `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(email)}`,
+        `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(
+          email
+        )}`,
         {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         }
       );

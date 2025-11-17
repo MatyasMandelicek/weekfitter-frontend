@@ -554,6 +554,7 @@ const CalendarPage = () => {
           "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
         }
       });
+
       setShowModal(false);
       setSelectedEvent(null);
       await loadEvents();

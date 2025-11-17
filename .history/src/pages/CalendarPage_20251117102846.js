@@ -548,12 +548,13 @@ const CalendarPage = () => {
   const handleDelete = async () => {
     if (!selectedEvent) return;
     try {
-      await fetch(`${API_URL}/api/events/${selectedEvent.id}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
-        }
-      });
+await fetch(`${API_URL}/api/events/${selectedEvent.id}`, {
+  method: "DELETE",
+  headers: {
+    "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
+  }
+});
+
       setShowModal(false);
       setSelectedEvent(null);
       await loadEvents();
