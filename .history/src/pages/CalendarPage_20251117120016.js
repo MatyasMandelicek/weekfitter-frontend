@@ -623,6 +623,7 @@ const CalendarPage = () => {
         },
         body: JSON.stringify(payload),
       });
+
       if (!res.ok) {
         console.error(
           "Chyba při změně délky události:",

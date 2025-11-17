@@ -91,11 +91,7 @@ const DashboardPage = () => {
     const load = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_URL}/api/events`, {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const res = await fetch(`${API_URL}/api/events?email=${encodeURIComponent(email)}`);
 
         console.log("Dashboard fetch status:", res.status);
         let text = await res.text();

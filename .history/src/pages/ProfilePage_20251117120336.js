@@ -184,13 +184,10 @@ const ProfilePage = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      const response = await fetch(`${API_URL}/api/users/profile`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(userData),
+      const response = await fetch(`${API_URL}/api/users/profile?email=${email}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData),
       });
 
       if (response.ok) {

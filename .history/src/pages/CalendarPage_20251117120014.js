@@ -615,14 +615,15 @@ const CalendarPage = () => {
     );
 
     try {
-      const res = await fetch(`${API_URL}/api/events/${event.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(payload),
-      });
+const res = await fetch(`${API_URL}/api/events/${event.id}`, {
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+  },
+  body: JSON.stringify(payload),
+});
+
       if (!res.ok) {
         console.error(
           "Chyba při změně délky události:",

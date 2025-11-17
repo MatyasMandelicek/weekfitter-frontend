@@ -101,6 +101,7 @@ const DashboardPage = () => {
         let text = await res.text();
         console.log("Dashboard raw response:", text);
 
+
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         let data;

@@ -26,17 +26,18 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/users/profile`, {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        if (response.ok) {
-          const user = await response.json();
-          setUserData(user);
-        } else {
-          setMessage({ type: "error", text: "Nepodařilo se načíst údaje o uživateli." });
-        }
+const response = await fetch(`${API_URL}/api/users/profile`, {
+  headers: {
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+  },
+});
+if (response.ok) {
+  const user = await response.json();
+  setUserData(user);
+} else {
+  setMessage({ type: "error", text: "Nepodařilo se načíst údaje o uživateli." });
+}
+
       } catch (error) {
         console.error("Chyba při načítání profilu:", error);
         setMessage({ type: "error", text: "Chyba připojení k serveru."});
@@ -147,14 +148,14 @@ const ProfilePage = () => {
       }
 
       // 3) Uložení URL do backendu (DB)
-      const saveResponse = await fetch(`${API_URL}/api/users/profile`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ photo: publicUrl }),
-      });
+      const saveResponse = await fetch(
+        `${API_URL}/api/users/profile?email=${encodeURIComponent(email)}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ photo: publicUrl }),
+        }
+      );
 
       if (!saveResponse.ok) {
         setMessage({ type: "error", text: "Fotka byla nahrána, ale nepodařilo se ji uložit v profilu." });
@@ -184,13 +185,10 @@ const ProfilePage = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      const response = await fetch(`${API_URL}/api/users/profile`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(userData),
+      const response = await fetch(`${API_URL}/api/users/profile?email=${email}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData),
       });
 
       if (response.ok) {

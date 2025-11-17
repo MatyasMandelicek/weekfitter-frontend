@@ -193,6 +193,7 @@ const ProfilePage = () => {
         body: JSON.stringify(userData),
       });
 
+
       if (response.ok) {
         setMessage({ type: "success", text: "Změny byly úspěšně uloženy!" });
         localStorage.setItem("userName", userData.firstName);

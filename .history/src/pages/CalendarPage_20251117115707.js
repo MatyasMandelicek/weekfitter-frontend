@@ -121,11 +121,12 @@ const CalendarPage = () => {
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/events`, {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+const res = await fetch(`${API_URL}/api/events`, {
+  headers: {
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+  },
+});
+
 
       const data = await res.json();
 
@@ -512,8 +513,10 @@ const CalendarPage = () => {
 
     const method = selectedEvent ? "PUT" : "POST";
     const url = selectedEvent
-      ? `${API_URL}/api/events/${selectedEvent.id}`
-      : `${API_URL}/api/events`;
+      ? `${API_URL}/api/events/${
+          selectedEvent.id
+        }?email=${encodeURIComponent(email)}`
+      : `${API_URL}/api/events?email=${encodeURIComponent(email)}`;
 
     try {
       const res = await fetch(url, {
@@ -546,7 +549,7 @@ const CalendarPage = () => {
       await fetch(`${API_URL}/api/events/${selectedEvent.id}`, {
         method: "DELETE",
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+          "Authorization": `Bearer ${localStorage.getItem("token")}`   // 🔥
         }
       });
       setShowModal(false);
@@ -563,6 +566,7 @@ const CalendarPage = () => {
     Pošle změnu na backend
  */
   const handleEventDrop = async ({ event, start, end }) => {
+    const email = localStorage.getItem("userEmail");
     const payload = buildPayloadFromEvent(
       { ...event, start: event.start, end: event.end },
       { start, end }
@@ -578,14 +582,17 @@ const CalendarPage = () => {
     );
 
     try {
-      const res = await fetch(`${API_URL}/api/events/${event.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(email)}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+          body: JSON.stringify(payload),
+        }
+      );
       if (!res.ok) {
         console.error("Chyba při přesunu události:", await res.text());
         await loadEvents();
@@ -615,14 +622,17 @@ const CalendarPage = () => {
     );
 
     try {
-      const res = await fetch(`${API_URL}/api/events/${event.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        `${API_URL}/api/events/${event.id}?email=${encodeURIComponent(email)}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+          body: JSON.stringify(payload),
+        }
+      );
       if (!res.ok) {
         console.error(
           "Chyba při změně délky události:",

@@ -91,15 +91,16 @@ const DashboardPage = () => {
     const load = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_URL}/api/events`, {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+const res = await fetch(`${API_URL}/api/events`, {
+  headers: {
+    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+  },
+});
 
-        console.log("Dashboard fetch status:", res.status);
-        let text = await res.text();
-        console.log("Dashboard raw response:", text);
+console.log("Dashboard fetch status:", res.status);
+let text = await res.text();
+console.log("Dashboard raw response:", text);
+
 
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
