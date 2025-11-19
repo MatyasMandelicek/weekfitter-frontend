@@ -70,17 +70,17 @@ const sportIcons = {
 // Hlavní komponenta CalendarPage
 const CalendarPage = () => {
 
-  useEffect(() => {
-    // Zabrání touchpadům posílat falešné "scroll" při kliknutí
-    const fixTouchpadClicks = (e) => {
-      if (e.deltaY !== 0 && Math.abs(e.deltaY) < 15) {
-        e.stopPropagation();
-      }
-    };
+useEffect(() => {
+  // Zabrání touchpadům posílat falešné "scroll" při kliknutí
+  const fixTouchpadClicks = (e) => {
+    if (e.deltaY !== 0 && Math.abs(e.deltaY) < 15) {
+      e.stopPropagation();
+    }
+  };
 
-    window.addEventListener("wheel", fixTouchpadClicks, { passive: false });
-    return () => window.removeEventListener("wheel", fixTouchpadClicks);
-  }, []);
+  window.addEventListener("wheel", fixTouchpadClicks, { passive: false });
+  return () => window.removeEventListener("wheel", fixTouchpadClicks);
+}, []);
 
 
   // seznam událostí v kalendáři

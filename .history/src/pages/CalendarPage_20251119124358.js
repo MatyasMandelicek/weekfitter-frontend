@@ -69,20 +69,6 @@ const sportIcons = {
 
 // Hlavní komponenta CalendarPage
 const CalendarPage = () => {
-
-  useEffect(() => {
-    // Zabrání touchpadům posílat falešné "scroll" při kliknutí
-    const fixTouchpadClicks = (e) => {
-      if (e.deltaY !== 0 && Math.abs(e.deltaY) < 15) {
-        e.stopPropagation();
-      }
-    };
-
-    window.addEventListener("wheel", fixTouchpadClicks, { passive: false });
-    return () => window.removeEventListener("wheel", fixTouchpadClicks);
-  }, []);
-
-
   // seznam událostí v kalendáři
   const [events, setEvents] = useState([]);
 
@@ -788,7 +774,8 @@ const CalendarPage = () => {
             localizer={localizer}
             events={events}
             pressDelay={180}
-            longPressThreshold={150}
+longPressThreshold={150}
+
             startAccessor="start"
             endAccessor="end"
             selectable
@@ -798,6 +785,7 @@ const CalendarPage = () => {
             onSelectSlot={handleSelectSlot}
             onSelectEvent={handleSelectEvent}
             onDoubleClickEvent={handleSelectEvent}
+            longPressThreshold={50}
             popup
             eventPropGetter={getEventStyle}
             components={{ event: CustomEvent }}
@@ -947,8 +935,6 @@ const CalendarPage = () => {
               <DnDCalendar
                 localizer={localizer}
                 events={events}
-                pressDelay={180}
-                longPressThreshold={150}
                 startAccessor="start"
                 endAccessor="end"
                 selectable
@@ -958,6 +944,7 @@ const CalendarPage = () => {
                 onSelectSlot={handleSelectSlot}
                 onSelectEvent={handleSelectEvent}
                 onDoubleClickEvent={handleSelectEvent}
+                longPressThreshold={50}
                 popup
                 eventPropGetter={getEventStyle}
                 components={{
