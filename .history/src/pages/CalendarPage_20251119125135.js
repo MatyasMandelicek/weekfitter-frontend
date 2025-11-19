@@ -950,8 +950,6 @@ const CalendarPage = () => {
                 events={events}
                 pressDelay={180}
                 longPressThreshold={150}
-                draggableAccessor={() => true}
-                resizableAccessor={() => true}
                 startAccessor="start"
                 endAccessor="end"
                 selectable

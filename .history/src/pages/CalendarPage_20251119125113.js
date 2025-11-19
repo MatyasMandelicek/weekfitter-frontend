@@ -786,8 +786,6 @@ const CalendarPage = () => {
           <DnDCalendar
             localizer={localizer}
             events={events}
-            draggableAccessor={() => true}
-            resizableAccessor={() => true}
             pressDelay={180}
             longPressThreshold={150}
             startAccessor="start"
@@ -950,8 +948,6 @@ const CalendarPage = () => {
                 events={events}
                 pressDelay={180}
                 longPressThreshold={150}
-                draggableAccessor={() => true}
-                resizableAccessor={() => true}
                 startAccessor="start"
                 endAccessor="end"
                 selectable
